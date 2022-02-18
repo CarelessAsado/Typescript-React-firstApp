@@ -3,12 +3,12 @@ import { ActionsEnum } from "../Context/models";
 import { useTareasGlobalContext } from "./useTareasGlobalContext";
 
 export const useResetErrors = () => {
-  const { dispatch, error } = useTareasGlobalContext();
+  const { dispatch /* , error */ } = useTareasGlobalContext();
   useEffect(() => {
     function resetErrors() {
       dispatch({ type: ActionsEnum.RESET_ERRORS });
     }
-    error && resetErrors();
+    /*  error && */ resetErrors();
   }, [dispatch]);
   return undefined;
 };
