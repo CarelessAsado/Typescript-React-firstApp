@@ -1,0 +1,42 @@
+@url = http://localhost:5000/api/v1
+ 
+POST {{url}}/tasks/62099d06ba2f4a6bdc14543d
+content-type: application/json  
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA5Y2FiM2NlNGYwMTA1N2ZhNzdhNDEiLCJlbWFpbCI6InJycmRlZGRmZkBnLmNvbSIsImlhdCI6MTY0NDg2NDQwNSwiZXhwIjoxNjQ0OTUwODA1fQ.9BxbOTKTqbd8x1VS_iJjEgQKQIST4lOVdcEh-2YTGrU
+ 
+{
+    "name": "jugar con los pi"
+}
+ 
+###
+PUT {{url}}/tasks/done/620aaea3a7fd1488ecffd5bd
+content-type: application/json  
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA5Y2FiM2NlNGYwMTA1N2ZhNzdhNDEiLCJlbWFpbCI6InJycmRlZGRmZkBnLmNvbSIsImlhdCI6MTY0NDg2NDQwNSwiZXhwIjoxNjQ0OTUwODA1fQ.9BxbOTKTqbd8x1VS_iJjEgQKQIST4lOVdcEh-2YTGrU
+ 
+{
+    "done": true
+}
+ 
+###
+###
+PUT {{url}}/tasks/name/620aaea3a7fd1488ecffd5bd
+content-type: application/json  
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA5Y2FiM2NlNGYwMTA1N2ZhNzdhNDEiLCJlbWFpbCI6InJycmRlZGRmZkBnLmNvbSIsImlhdCI6MTY0NDg2NDQwNSwiZXhwIjoxNjQ0OTUwODA1fQ.9BxbOTKTqbd8x1VS_iJjEgQKQIST4lOVdcEh-2YTGrU
+ 
+{
+    "name": "ir a la playa"
+}
+ 
+###
+GET {{url}}/tasks/qsdqsdqdq/6209cab3ce4f01057fa77a41
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjBlNjExZGMxZDE2ZGI0Y2JiYTgyNGQiLCJlbWFpbCI6InJvZEBnLmNvbSIsImlhdCI6MTY0NTEyMTQwNywiZXhwIjoxNjQ1MjA3ODA3fQ.7h4VOwkDYiRrd0_QGA82JozzS4Cn48aBoncKWonsnZ
+
+ 
+###
+
+GET {{url}}/task/620ab345087524b6eb9e3c3d
+
+###
+DELETE {{url}}/tasks/620ab3c6a1f54ed34d4d6a02
+
+###

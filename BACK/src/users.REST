@@ -1,0 +1,13 @@
+@url = http://localhost:5000/api/v1
+ 
+
+POST {{url}}/users/
+content-type: application/json  
+ 
+{
+    "username": "Kris",
+    "email": "casa@yeahbaby.com.ar",
+    "password":"BLABLA"
+}
+ 
+###

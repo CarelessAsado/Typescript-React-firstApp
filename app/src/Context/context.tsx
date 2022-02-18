@@ -1,0 +1,49 @@
+import { createContext, useReducer } from "react";
+import { Actions, taskReducer } from "./reducer";
+import { ITarea, IUser } from "./models";
+
+interface CreateContProps {
+  user: IUser;
+  tareas: ITarea[];
+  error: boolean | string;
+  isFetching: boolean;
+  successRegister: string;
+  dispatch: React.Dispatch<Actions>;
+}
+
+export const TareasContext = createContext<CreateContProps>(
+  {} as CreateContProps
+);
+
+interface ProviderProps {
+  children: JSX.Element | JSX.Element[];
+}
+
+const defaultState = {
+  tareas: [],
+
+  user: {
+    username: "",
+    email: "",
+    _id: "",
+    token: "",
+  },
+  error: false,
+  isFetching: false,
+  successRegister: "",
+};
+const TareaContextProvider = ({ children }: ProviderProps) => {
+  const [state, dispatch] = useReducer(taskReducer, defaultState);
+  return (
+    <TareasContext.Provider
+      value={{
+        ...state,
+        dispatch,
+      }}
+    >
+      {children}
+    </TareasContext.Provider>
+  );
+};
+
+export { TareaContextProvider };

@@ -1,0 +1,26 @@
+FALTA:
+Types: error en front y back /busque un poco y no parece tan clearcut, ver dsp
+        axios en el front/ empty array 
+Chequear clg + gitignore
+FRONT:
+    Responsiveness DONE
+        clean-up error onload DONE ver si aplica call back
+        Nombre ponerle q dsp de cierta length sea "user" DONE
+    Agregar foto
+
+
+/*----CHEQUEAR LOS METODOS DE MI INSTANCE AXIOS Q NO LOS TOMA*/
+/*----BORRAR CLG ERRORS,CHEQUEAR Q VALIDATION ERROR EN ARRAY ESTE BIEN
+CHEQUEAR TYPE ERROR Q PUSE ANY*/
+/*----VER HEADERS SI LO PUEDO HACER MAS PROLIJO, Y VER EN EL BACKEND Q 
+ESTE COMO MIDDLE DONDE CORRESPONDE
+TENGO Q PASAR EL ID A LA FUNCION? O PUEDO HACER ALGUNA MAGIA NEGRA A NIVEL GLOBAL*/
+
+BACK: error wrapper
+    Ver Mongoose loopear errors
+    Middleware comprobar q req.user jwt no tenga acceso a otros usuarios DONE
+    Delete method no borraba del User model la id de la task DONE
+    
+FUTURE:
+
+    user page/profile
