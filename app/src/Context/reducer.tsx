@@ -38,7 +38,7 @@ export const taskReducer = (state: State, action: Actions) => {
         isFetching: false,
         user: action.payload,
       };
-    /*---------------LOGIN-----------------*/
+    /*---------------LOGOUT-----------------*/
     case ActionsEnum.LOG_OUT:
       return {
         ...state,
