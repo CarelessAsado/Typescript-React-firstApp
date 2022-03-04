@@ -33,7 +33,7 @@ export interface IRegisterInput {
 export const Register = () => {
   const navigate = useNavigate();
   const errorAssert = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const { dispatch, error } = useTareasGlobalContext();
+  const { dispatch, error, isFetching } = useTareasGlobalContext();
   const [registerInput, setregisterInput] = useState<IRegisterInput>({
     username: "",
     email: "",
@@ -89,7 +89,10 @@ export const Register = () => {
           placeholder="Confirm password *"
           id="Confirmpassword"
         ></Input>
-        <Input type="submit" value="Submit"></Input>
+        <Input
+          type="submit"
+          value={isFetching ? "Loading..." : "Submit"}
+        ></Input>
         <Bottom>
           Already have an account?
           <RegisterLink to="/login">Log in here.</RegisterLink>{" "}

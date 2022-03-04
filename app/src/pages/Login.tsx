@@ -32,7 +32,8 @@ export interface ILoginInput {
 export const Login = () => {
   const navigate = useNavigate();
   const errorAssert = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const { dispatch, error, successRegister } = useTareasGlobalContext();
+  const { dispatch, error, successRegister, isFetching } =
+    useTareasGlobalContext();
   const [loginInput, setLoginInput] = useState<ILoginInput>({
     email: "",
     password: "",
@@ -74,7 +75,10 @@ export const Login = () => {
           placeholder="Password *"
           id="password"
         ></Input>
-        <Input type="submit" value="Submit"></Input>
+        <Input
+          type="submit"
+          value={isFetching ? "Loading..." : "Submit"}
+        ></Input>
         <Bottom>
           No account yet?
           <RegisterLink to="/register">Register here.</RegisterLink>{" "}
