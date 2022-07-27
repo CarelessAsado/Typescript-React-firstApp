@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
-import { API } from "../API/tasksAPI";
-import { useTareasGlobalContext } from "../Hooks/useTareasGlobalContext";
+import { API } from "API/tasksAPI";
+import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 
 import Tasks from "./Tasks";
 

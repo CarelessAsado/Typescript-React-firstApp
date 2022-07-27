@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Login, Register, Main } from "./pages/Index";
-import { useTareasGlobalContext } from "./Hooks/useTareasGlobalContext";
-import { ProtectedByAuth } from "./components/ProtectedByAuth";
-import { PersistLogin } from "./components/PersistLogin";
-import { Nav } from "./components/Nav";
-import { UserProfile } from "./pages/UserProfile";
+import { Login, Register, Main } from "pages/Index";
+import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
+import { ProtectedByAuth } from "components/ProtectedByAuth";
+import { PersistLogin } from "components/PersistLogin";
+import { Nav } from "components/Nav";
+import { UserProfile } from "pages/UserProfile";
 
 function App() {
   const { user } = useTareasGlobalContext();

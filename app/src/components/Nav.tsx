@@ -1,7 +1,7 @@
-import { useTareasGlobalContext } from "../Hooks/useTareasGlobalContext";
+import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { API_Auth } from "../API/API_Auth";
+import { API_Auth } from "API/API_Auth";
 import {
   BiLogOut,
   BiLogIn,

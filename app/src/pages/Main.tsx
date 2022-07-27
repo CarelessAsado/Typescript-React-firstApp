@@ -1,4 +1,4 @@
-import { FormComponent } from "../components/Form";
+import { FormComponent } from "components/Form";
 
 export const Main = () => {
   return (

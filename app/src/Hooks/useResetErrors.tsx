@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ActionsEnum } from "../Context/models";
+import { ActionsEnum } from "Context/models";
 import { useTareasGlobalContext } from "./useTareasGlobalContext";
 
 export const useResetErrors = () => {

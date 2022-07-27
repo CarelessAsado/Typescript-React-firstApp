@@ -1,8 +1,8 @@
 import { NavigateFunction } from "react-router-dom";
-import { ActionsEnum } from "../Context/models";
-import { Actions } from "../Context/reducer";
-import { ILoginInput } from "../pages/Login";
-import { IRegisterInput } from "../pages/Register";
+import { ActionsEnum } from "Context/models";
+import { Actions } from "Context/reducer";
+import { ILoginInput } from "pages/Login";
+import { IRegisterInput } from "pages/Register";
 import loginAxiosInstance from "./loginAxiosInstance";
 import axiosInstanceJWT from "./axiosInstanceJWT";
 export const API_Auth = {

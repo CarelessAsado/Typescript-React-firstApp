@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import { useTareasGlobalContext } from "../Hooks/useTareasGlobalContext";
+import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
+import { FRONTEND_URL } from "config/constants";
 
 export const ProtectedByAuth = () => {
   const { user } = useTareasGlobalContext();
@@ -8,6 +9,10 @@ export const ProtectedByAuth = () => {
   return user?._id ? (
     <Outlet></Outlet>
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace></Navigate>
+    <Navigate
+      to={FRONTEND_URL.login}
+      state={{ from: location }}
+      replace
+    ></Navigate>
   );
 };

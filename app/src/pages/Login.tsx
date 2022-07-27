@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import { useTareasGlobalContext } from "../Hooks/useTareasGlobalContext";
+import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
-import { API_Auth } from "../API/API_Auth";
+import { API_Auth } from "API/API_Auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -10,8 +10,8 @@ import {
   Error,
   Bottom,
   Header,
-} from "../components/styled-components/styled";
-import { useResetErrors } from "../Hooks/useResetErrors";
+} from "components/styled-components/styled";
+import { useResetErrors } from "Hooks/useResetErrors";
 const SuccessRegister = styled(Error)`
   color: green;
 `;
