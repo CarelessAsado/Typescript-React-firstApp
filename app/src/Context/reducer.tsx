@@ -1,4 +1,4 @@
-import { ActionsEnum, ITarea, IUser } from "./models";
+import { ActionsEnum } from "./models";
 
 export type Actions =
   | { type: ActionsEnum.START_FETCH_ALL }

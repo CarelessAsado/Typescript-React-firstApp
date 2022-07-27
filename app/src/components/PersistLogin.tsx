@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axiosInstanceJWT from "API/axiosInstanceJWT";
-import { ActionsEnum, IUser } from "Context/models";
+import { ActionsEnum } from "Context/models";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 
 export const PersistLogin = () => {

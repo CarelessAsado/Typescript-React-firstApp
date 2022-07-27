@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { ITarea } from "Context/models";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import { API } from "API/tasksAPI";
 interface StyledProps {

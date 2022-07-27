@@ -1,16 +1,3 @@
-export interface ITarea {
-  name: string;
-  _id: string;
-  done: boolean;
-  /*   createdAt: Date;
-  updatedAt:Date; */
-}
-export interface IUser {
-  username: string;
-  _id: string;
-  email: string;
-  token: string;
-}
 export enum ActionsEnum {
   START_FETCH_ALL = "START_ALL_API_CALLS",
   FAILURE_FETCH_ALL = "FAILURE_FETCH_ALL",

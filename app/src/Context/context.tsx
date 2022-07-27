@@ -1,6 +1,5 @@
 import { createContext, useReducer } from "react";
 import { Actions, taskReducer } from "./reducer";
-import { ITarea, IUser } from "./models";
 
 interface CreateContProps {
   user: IUser;
