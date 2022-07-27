@@ -1,8 +1,9 @@
+import { BACKEND_ROOT } from "config/constants";
+
 const axios = require("axios").default;
-export const baseUrl =
-  "https://typescript-backend-reactnode.herokuapp.com/api/v1";
+
 export default axios.create({
-  baseURL: baseUrl,
+  baseURL: BACKEND_ROOT,
   headers: {
     "auth-token": "",
   },

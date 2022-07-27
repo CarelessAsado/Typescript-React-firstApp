@@ -3,3 +3,8 @@ export const FRONTEND_URL = {
   register: "/register",
   home: "/",
 };
+
+export const BACKEND_ROOT =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/api/v1"
+    : "https://typescript-backend-reactnode.herokuapp.com/api/v1";

@@ -1,6 +1,7 @@
-import { baseUrl } from "./axiosInstanceJWT";
+import { BACKEND_ROOT } from "config/constants";
+
 const axios = require("axios").default;
 
 export default axios.create({
-  baseURL: baseUrl,
+  baseURL: BACKEND_ROOT,
 });
