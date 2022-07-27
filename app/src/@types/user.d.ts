@@ -11,6 +11,7 @@ type IUser = {
   email: string;
   token: string;
 } | null;
+type UserNotNull = NonNullable<IUser>;
 
 type State = {
   tareas: ITarea[];

@@ -1,4 +1,4 @@
-import { ActionsEnum } from "Context/models";
+import { ActionsEnum } from "Context/actions";
 import { Actions } from "Context/reducer";
 import axios from "./axiosInstanceJWT";
 

@@ -1,11 +1,11 @@
-import { ActionsEnum } from "./models";
+import { ActionsEnum } from "./actions";
 
 export type Actions =
   | { type: ActionsEnum.START_FETCH_ALL }
   | { type: ActionsEnum.RESET_ERRORS }
   | { type: ActionsEnum.FAILURE_FETCH_ALL; payload: string }
   | { type: ActionsEnum.SUCCESS_FETCH_ALL; payload: ITarea[] }
-  | { type: ActionsEnum.SUCCESS_LOGIN; payload: IUser }
+  | { type: ActionsEnum.SUCCESS_LOGIN; payload: UserNotNull }
   | { type: ActionsEnum.LOG_OUT }
   | { type: ActionsEnum.SUCCESS_REGISTER }
   | { type: ActionsEnum.SUCCESS_POST_NEW_TASK; payload: ITarea }

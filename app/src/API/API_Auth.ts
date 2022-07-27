@@ -1,5 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
-import { ActionsEnum } from "Context/models";
+import { ActionsEnum } from "Context/actions";
 import { Actions } from "Context/reducer";
 import { ILoginInput } from "pages/Login";
 import { IRegisterInput } from "pages/Register";

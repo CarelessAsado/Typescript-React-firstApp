@@ -1,17 +1,12 @@
 import { createContext, useReducer } from "react";
 import { Actions, taskReducer } from "./reducer";
 
-interface CreateContProps {
-  user: IUser;
-  tareas: ITarea[];
-  error: boolean | string;
-  isFetching: boolean;
-  successRegister: string;
+type CreateContProps = {
   dispatch: React.Dispatch<Actions>;
-}
+} & State;
 
-export const TareasContext = createContext<CreateContProps>(
-  {} as CreateContProps
+export const TareasContext = createContext(
+  /* <CreateContProps> */ {} as CreateContProps
 );
 
 interface ProviderProps {
