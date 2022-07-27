@@ -1,5 +1,5 @@
-import { ActionsEnum } from "../Context/models";
-import { Actions } from "../Context/reducer";
+import { ActionsEnum } from "Context/models";
+import { Actions } from "Context/reducer";
 import axios from "./axiosInstanceJWT";
 
 export const API = {

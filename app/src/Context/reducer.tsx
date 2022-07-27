@@ -13,14 +13,6 @@ export type Actions =
   | { type: ActionsEnum.SUCCESS_UPDATE_NAME; payload: ITarea }
   | { type: ActionsEnum.SUCCESS_DELETE; payload: string };
 
-export type State = {
-  /*-----------VER BIEN COMO HACER PARA Q ME ACEPTE ARRAY VACIO Y Q NO TIRE NEVER*/
-  tareas: ITarea[] | any;
-  user: IUser;
-  error: boolean | string;
-  isFetching: boolean;
-  successRegister: string;
-};
 export const taskReducer = (state: State, action: Actions) => {
   const copia: ITarea[] = [...state.tareas];
   switch (action.type) {

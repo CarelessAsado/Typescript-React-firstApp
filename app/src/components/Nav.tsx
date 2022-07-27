@@ -9,6 +9,7 @@ import {
   BiHomeHeart,
   BiUserPlus,
 } from "react-icons/bi";
+import { FRONTEND_URL } from "config/constants";
 const BlockBehindNavBar = styled.div`
   height: 60px;
 `;
@@ -91,14 +92,14 @@ export const Nav = () => {
     <>
       <BlockBehindNavBar />
       <NavBar>
-        <Link to="/">
+        <Link to={FRONTEND_URL.home}>
           <Logo>ROD</Logo>
         </Link>
         <Links>
-          {user._id ? (
+          {user ? (
             <>
               <LinkItem>
-                <NavLink to="/">
+                <NavLink to={FRONTEND_URL.home}>
                   <BiHomeHeart />
                   <Span>Home</Span>
                 </NavLink>
@@ -119,13 +120,13 @@ export const Nav = () => {
           ) : (
             <>
               <LinkItem>
-                <NavLink to="/register">
+                <NavLink to={FRONTEND_URL.register}>
                   <BiUserPlus />
                   Register
                 </NavLink>
               </LinkItem>
               <LinkItem>
-                <NavLink to="/login">
+                <NavLink to={FRONTEND_URL.login}>
                   <BiLogIn></BiLogIn>
                   Login
                 </NavLink>

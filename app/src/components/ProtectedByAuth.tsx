@@ -6,7 +6,7 @@ import { FRONTEND_URL } from "config/constants";
 export const ProtectedByAuth = () => {
   const { user } = useTareasGlobalContext();
   const location = useLocation();
-  return user?._id ? (
+  return user ? (
     <Outlet></Outlet>
   ) : (
     <Navigate

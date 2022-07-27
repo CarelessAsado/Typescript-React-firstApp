@@ -18,15 +18,9 @@ interface ProviderProps {
   children: JSX.Element | JSX.Element[];
 }
 
-const defaultState = {
+const defaultState: State = {
   tareas: [],
-
-  user: {
-    username: "",
-    email: "",
-    _id: "",
-    token: "",
-  },
+  user: null,
   error: false,
   isFetching: false,
   successRegister: "",

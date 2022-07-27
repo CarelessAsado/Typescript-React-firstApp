@@ -75,6 +75,7 @@ export const FormComponent: React.FC = () => {
   const { tareas, user, isFetching, error, dispatch } =
     useTareasGlobalContext();
   const [inputTask, setInputTask] = useState<string>("");
+  const userId = user?._id || "";
   const addTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     /*-----HACER UN CUSTOM ALERT-----*/
@@ -82,13 +83,13 @@ export const FormComponent: React.FC = () => {
       
       return alert("Task is empty.");
     } */
-    API.postNewTask(user._id, inputTask, dispatch);
+    API.postNewTask(userId, inputTask, dispatch);
     setInputTask("");
   };
   /*----------------GET ALL TASKS--------*/
   useEffect(() => {
-    API.getTasks(user._id, dispatch);
-  }, [dispatch, user._id]);
+    API.getTasks(userId, dispatch);
+  }, [dispatch, userId]);
   /*-------------------------------------*/
   return (
     <Container>

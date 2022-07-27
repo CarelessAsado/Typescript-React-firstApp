@@ -12,20 +12,19 @@ function App() {
   return (
     <div className="App">
       <Nav></Nav>
-
       <Routes>
         <Route
           path="/login"
-          element={user._id ? <Navigate to="/"></Navigate> : <Login />}
+          element={user ? <Navigate to="/" /> : <Login />}
         ></Route>
 
         <Route
           path="/register"
-          element={user._id ? <Navigate to="/"></Navigate> : <Register />}
+          element={user ? <Navigate to="/" /> : <Register />}
         ></Route>
 
         <Route element={<PersistLogin />}>
-          <Route element={<ProtectedByAuth></ProtectedByAuth>}>
+          <Route element={<ProtectedByAuth />}>
             <Route path="/" element={<Main />}></Route>
             <Route path="/profile/user/:id" element={<UserProfile />}></Route>
           </Route>

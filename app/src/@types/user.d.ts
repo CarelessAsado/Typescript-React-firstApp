@@ -5,9 +5,17 @@ interface ITarea {
   /*   createdAt: Date;
   updatedAt:Date; */
 }
-interface IUser {
+type IUser = {
   username: string;
   _id: string;
   email: string;
   token: string;
-}
+} | null;
+
+type State = {
+  tareas: ITarea[];
+  user: IUser;
+  error: boolean | string;
+  isFetching: boolean;
+  successRegister: string;
+};

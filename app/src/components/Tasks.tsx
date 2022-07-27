@@ -73,6 +73,7 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
   const [editInputBis, setEditInputBis] = useState<string>(name);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clicked, setClicked] = useState<boolean>(false);
+  const userId = user?._id || "";
   function changeEditStatus() {
     if (isEditing && clicked) {
       return;
@@ -87,7 +88,7 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
   function editName() {
     setIsEditing(false);
     if (editInput.current.value === name) return;
-    API.updateNAME(_id, user._id, editInputBis, dispatch);
+    API.updateNAME(_id, userId, editInputBis, dispatch);
   }
   useEffect(() => {
     isEditing && editInput.current.focus();
@@ -109,12 +110,10 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
         <Update onClick={changeEditStatus}>
           <AiFillEdit />
         </Update>
-        <CheckDone
-          onClick={() => API.updateDONE(_id, user._id, !done, dispatch)}
-        >
+        <CheckDone onClick={() => API.updateDONE(_id, userId, !done, dispatch)}>
           {done ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
         </CheckDone>
-        <Delete onClick={() => API.deleteTask(_id, user._id, dispatch)}>
+        <Delete onClick={() => API.deleteTask(_id, userId, dispatch)}>
           <AiFillDelete></AiFillDelete>
         </Delete>
       </Functionality>
