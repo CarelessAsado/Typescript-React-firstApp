@@ -36,12 +36,7 @@ export const taskReducer = (state: State, action: Actions) => {
         ...state,
         isFetching: false,
         error: false,
-        user: {
-          username: "",
-          email: "",
-          _id: "",
-          token: "",
-        },
+        user: null,
       };
     /*---------------REGISTER-----------------*/
     case ActionsEnum.SUCCESS_REGISTER:

@@ -1,7 +1,7 @@
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { API_Auth } from "API/API_Auth";
+import { authAPI } from "API/authAPI";
 import {
   BiLogOut,
   BiLogIn,
@@ -112,7 +112,7 @@ export const Nav = () => {
                     : user.username.split(" ")[0]}
                 </NavLink>
               </LinkItem>
-              <LinkItem onClick={() => API_Auth.logout(dispatch, navigate)}>
+              <LinkItem onClick={() => authAPI.logout(dispatch, navigate)}>
                 <BiLogOut />
                 <Span>Logout</Span>
               </LinkItem>

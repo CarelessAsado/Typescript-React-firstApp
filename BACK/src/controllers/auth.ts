@@ -26,8 +26,10 @@ module.exports = {
   },
   loginUser: async (req: Request, res: Response): Promise<Response> => {
     const { email, password } = req.body;
+
     try {
       let user = await User.findOne({ email });
+
       if (!user) {
         return res.status(401).json("Username or password do not match.");
       }

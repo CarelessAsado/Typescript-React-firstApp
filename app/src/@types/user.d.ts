@@ -12,6 +12,7 @@ type IUser = {
   token: string;
 } | null;
 type UserNotNull = NonNullable<IUser>;
+type UserWithoutTkn = Omit<UserNotNull, "token">;
 
 type State = {
   tareas: ITarea[];
@@ -19,4 +20,8 @@ type State = {
   error: boolean | string;
   isFetching: boolean;
   successRegister: string;
+};
+
+type ILoginInput = Pick<IUser, "email"> & {
+  password: string;
 };

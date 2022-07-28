@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import axiosInstanceJWT from "API/axiosInstanceJWT";
+import axiosInstanceJWT, { setHeaders } from "API/axiosInstanceJWT";
 import { ActionsEnum } from "Context/actions";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 
@@ -15,9 +15,11 @@ export const PersistLogin = () => {
         return setIsLoading(false);
       }
       /*HAY USER, CALL STATE MANAGEMENT*/
-      const user: UserNotNull = JSON.parse(maybeUser);
-      axiosInstanceJWT.defaults.headers["auth-token"] = user?.token;
-      dispatch({ type: ActionsEnum.SUCCESS_LOGIN, payload: user });
+      const user: IUser = JSON.parse(maybeUser);
+      if (user) {
+        setHeaders(user.token);
+        dispatch({ type: ActionsEnum.SUCCESS_LOGIN, payload: user });
+      }
       setIsLoading(false);
     }
     user ? setIsLoading(false) : checkStorage();

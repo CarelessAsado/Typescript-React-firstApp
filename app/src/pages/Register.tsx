@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
-import { API_Auth } from "API/API_Auth";
+import { authAPI } from "API/authAPI";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -49,7 +49,7 @@ export const Register = () => {
     <Container>
       <Form
         onSubmit={(e) =>
-          API_Auth.register(e, registerInput, dispatch, navigate, errorAssert)
+          authAPI.register(e, registerInput, dispatch, navigate, errorAssert)
         }
       >
         <Header>Login to your account.</Header>

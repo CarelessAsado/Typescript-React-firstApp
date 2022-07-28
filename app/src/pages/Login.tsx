@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
-import { API_Auth } from "API/API_Auth";
+import { authAPI } from "API/authAPI";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -12,6 +12,7 @@ import {
   Header,
 } from "components/styled-components/styled";
 import { useResetErrors } from "Hooks/useResetErrors";
+import { FRONTEND_URL } from "config/constants";
 const SuccessRegister = styled(Error)`
   color: green;
 `;
@@ -25,14 +26,11 @@ const RegisterLink = styled(Link)`
     color: #0a1722;
   }
 `;
-export interface ILoginInput {
-  email: string;
-  password: string;
-}
+
 export const Login = () => {
   const navigate = useNavigate();
   const errorAssert = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const { dispatch, error, successRegister, isFetching } =
+  const { dispatch, login, error, successRegister, isFetching } =
     useTareasGlobalContext();
   const [loginInput, setLoginInput] = useState<ILoginInput>({
     email: "",
@@ -43,14 +41,13 @@ export const Login = () => {
     setLoginInput({ ...loginInput, [name]: e.target.value });
   };
   useResetErrors();
-
+  function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    login(loginInput);
+  }
   return (
     <Container>
-      <Form
-        onSubmit={(e) =>
-          API_Auth.login(e, loginInput, dispatch, navigate, errorAssert)
-        }
-      >
+      <Form onSubmit={handleLogin}>
         <Header>Login to your account.</Header>
         <Error error={error} ref={errorAssert} aria-live="assertive">
           {error}
@@ -81,7 +78,9 @@ export const Login = () => {
         ></Input>
         <Bottom>
           No account yet?
-          <RegisterLink to="/register">Register here.</RegisterLink>{" "}
+          <RegisterLink to={FRONTEND_URL.register}>
+            Register here.
+          </RegisterLink>{" "}
         </Bottom>
       </Form>
     </Container>
