@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
-import { authAPI } from "API/authAPI";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -12,6 +11,7 @@ import {
   Header,
 } from "components/styled-components/styled";
 import { useResetErrors } from "Hooks/useResetErrors";
+import { FRONTEND_URL } from "config/constants";
 
 const Label = styled.label``;
 
@@ -24,16 +24,11 @@ const RegisterLink = styled(Link)`
     color: #0a1722;
   }
 `;
-export interface IRegisterInput {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+
 export const Register = () => {
   const navigate = useNavigate();
   const errorAssert = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const { dispatch, error, isFetching } = useTareasGlobalContext();
+  const { register, error, isFetching } = useTareasGlobalContext();
   const [registerInput, setregisterInput] = useState<IRegisterInput>({
     username: "",
     email: "",
@@ -45,13 +40,16 @@ export const Register = () => {
     setregisterInput({ ...registerInput, [name]: e.target.value });
   };
   useResetErrors();
+  async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    /* IF REGISTRATION IS SUCCESSFUL IT RETURNS TRUE */
+    if (await register(registerInput)) {
+      navigate(FRONTEND_URL.login);
+    }
+  }
   return (
     <Container>
-      <Form
-        onSubmit={(e) =>
-          authAPI.register(e, registerInput, dispatch, navigate, errorAssert)
-        }
-      >
+      <Form onSubmit={handleRegister}>
         <Header>Login to your account.</Header>
         <Error error={error} ref={errorAssert} aria-live="assertive">
           {error}
@@ -95,7 +93,9 @@ export const Register = () => {
         ></Input>
         <Bottom>
           Already have an account?
-          <RegisterLink to="/login">Log in here.</RegisterLink>{" "}
+          <RegisterLink to={FRONTEND_URL.register}>
+            Log in here.
+          </RegisterLink>{" "}
         </Bottom>
       </Form>
     </Container>

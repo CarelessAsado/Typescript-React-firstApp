@@ -1,5 +1,6 @@
 import { authAPI } from "API/authAPI";
-import { headerKey } from "API/axiosInstanceJWT";
+import { headerKey, setHeaders } from "API/axiosInstanceJWT";
+import { LSTORAGE_KEY } from "config/constants";
 import { setHeadersAndLStorage } from "config/utils";
 import { createContext, useReducer } from "react";
 import { ActionsEnum } from "./actions";
@@ -8,6 +9,8 @@ import { Actions, taskReducer } from "./reducer";
 type CreateContProps = {
   dispatch: React.Dispatch<Actions>;
   login(input: ILoginInput): Promise<void>;
+  register(input: IRegisterInput): Promise<true | undefined>;
+  logout(): Promise<void>;
 } & State;
 
 export const TareasContext = createContext({} as CreateContProps);
@@ -40,6 +43,21 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
       renderError(error);
     }
   }
+  async function register(input: IRegisterInput) {
+    dispatch({ type: ActionsEnum.START_FETCH_ALL });
+    try {
+      await authAPI.register(input);
+      dispatch({ type: ActionsEnum.SUCCESS_REGISTER });
+      return true;
+    } catch (error) {
+      renderError(error);
+    }
+  }
+  async function logout() {
+    dispatch({ type: ActionsEnum.LOG_OUT });
+    setHeaders();
+    localStorage.removeItem(LSTORAGE_KEY);
+  }
   function renderError(error: any) {
     alert("hubo un error");
     console.log(error);
@@ -54,6 +72,8 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
         ...state,
         dispatch,
         login,
+        register,
+        logout,
       }}
     >
       {children}

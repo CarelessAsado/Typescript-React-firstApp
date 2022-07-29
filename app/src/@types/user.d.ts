@@ -14,6 +14,11 @@ type IUser = {
 type UserNotNull = NonNullable<IUser>;
 type UserWithoutTkn = Omit<UserNotNull, "token">;
 
+type IRegisterInput = Pick<IUser, "username" | "email"> & {
+  password: string;
+  confirmPassword: string;
+};
+
 type State = {
   tareas: ITarea[];
   user: IUser;

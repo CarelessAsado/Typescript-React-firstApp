@@ -1,7 +1,6 @@
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { authAPI } from "API/authAPI";
+import { Link } from "react-router-dom";
 import {
   BiLogOut,
   BiLogIn,
@@ -86,8 +85,8 @@ const Span = styled.span`
   }
 `;
 export const Nav = () => {
-  const { user, dispatch } = useTareasGlobalContext();
-  const navigate = useNavigate();
+  const { user, logout } = useTareasGlobalContext();
+
   return (
     <>
       <BlockBehindNavBar />
@@ -112,7 +111,7 @@ export const Nav = () => {
                     : user.username.split(" ")[0]}
                 </NavLink>
               </LinkItem>
-              <LinkItem onClick={() => authAPI.logout(dispatch, navigate)}>
+              <LinkItem onClick={logout}>
                 <BiLogOut />
                 <Span>Logout</Span>
               </LinkItem>

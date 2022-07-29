@@ -14,7 +14,7 @@ module.exports = {
     await newUser.hashPass();
     try {
       await newUser.save();
-      return res.status(201).json({ success: "Registration was successful." });
+      return res.sendStatus(201);
     } catch (error: any) {
       console.log(error);
       /*---------AGREGAR EL VALIDATION ERROR DEL DOC FORM Y VER ERROR WRAPPER----------*/
