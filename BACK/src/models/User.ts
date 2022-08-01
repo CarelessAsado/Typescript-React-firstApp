@@ -1,5 +1,7 @@
-import { model, Schema, Types,Document } from "mongoose";
+import { model, Schema, Types, Document } from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { expirationTokens, jwtSecret } from "../constants";
 
 export interface IUser extends Document {
   username: string;
@@ -9,8 +11,9 @@ export interface IUser extends Document {
   /*------INSTANCE METHODS-----------------*/
   hashPass: () => Promise<void>;
   verifyPass: (password: string) => Promise<boolean>;
+  generateAccessToken: () => string;
+  generateEmailToken: () => string;
 }
-
 
 export const User = new Schema<IUser>({
   username: {
@@ -39,10 +42,23 @@ User.methods.hashPass = async function () {
 User.methods.verifyPass = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
-/*--------------------------------------------------------*/
-/*  animalSchema.methods.findSimilarTypes = function (cb) {
-   return mongoose.model("Animal").find({ type: this.type }, cb);
- }; */
+/*-------------------GENERATE JWT ACCESS/REFRESH TOKENS---------------------*/
+User.methods.generateAccessToken = function () {
+  return jwt.sign({ _id: this._id, email: this.email }, jwtSecret, {
+    expiresIn: expirationTokens.access,
+  });
+};
+User.methods.generateEmailToken = function () {
+  return jwt.sign({ _id: this._id, email: this.email }, jwtSecret, {
+    expiresIn: expirationTokens.emailToken,
+  });
+};
+User.methods.generateRefreshToken = function () {
+  return jwt.sign({ _id: this._id }, jwtSecret, {
+    expiresIn: expirationTokens.refresh,
+  });
+};
+
 /*------------------------------------------------*/
 const userModel = model<IUser>("User", User);
 export default userModel;

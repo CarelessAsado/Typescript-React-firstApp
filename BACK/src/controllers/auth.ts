@@ -1,8 +1,7 @@
 import User, { IUser } from "../models/User";
-import jwt from "jsonwebtoken";
 import errorWrapper from "../ERRORS/asyncErrorWrapper";
 import { CustomError } from "../ERRORS/customErrors";
-import { jwtSecret } from "../constants";
+
 module.exports = {
   registerUser: errorWrapper(async (req, res, next) => {
     const { username, password, email, confirmPassword } = req.body;
@@ -24,19 +23,10 @@ module.exports = {
     if (!user) {
       return next(new CustomError(401, "Username or password do not match."));
     }
-    console.log(user, "ver xq aca esta completo y abajo no");
 
     /*---------------JWT INSTANCE METHOD-------------*/
-
-    //MAKE AN INSTANCE METHOD OUT OF THIS
-
     if (await user.verifyPass(password)) {
-      const accessToken = jwt.sign(
-        { _id: user._id, email: user.email },
-        jwtSecret,
-        { expiresIn: 86400 }
-      );
-      console.log(password, "ver q aca llega");
+      const accessToken = user.generateAccessToken();
       res.header("Access-Control-Expose-Headers", "auth-token");
 
       const cleanUser = user.toObject({

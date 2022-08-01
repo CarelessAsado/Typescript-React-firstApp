@@ -43,6 +43,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
       renderError(error);
     }
   }
+
   async function register(input: IRegisterInput) {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
@@ -53,6 +54,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
       renderError(error);
     }
   }
+
   async function logout() {
     dispatch({ type: ActionsEnum.LOG_OUT });
     setHeaders();
