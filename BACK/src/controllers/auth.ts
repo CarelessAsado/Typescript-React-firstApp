@@ -27,6 +27,7 @@ module.exports = {
     /*---------------JWT INSTANCE METHOD-------------*/
     if (await user.verifyPass(password)) {
       const accessToken = user.generateAccessToken();
+
       res.header("Access-Control-Expose-Headers", "auth-token");
 
       const cleanUser = user.toObject({

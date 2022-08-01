@@ -13,6 +13,7 @@ export interface IUser extends Document {
   verifyPass: (password: string) => Promise<boolean>;
   generateAccessToken: () => string;
   generateEmailToken: () => string;
+  generateRefreshToken: () => string;
 }
 
 export const User = new Schema<IUser>({
