@@ -1,7 +1,7 @@
 /* import { Types } from "mongoose"; */
+//cant have imports check whats going on
 declare namespace Express {
   interface Request {
-    user: { email: string; _id: any };
-    /*  no se porque no anda types.objectid aca */
+    user: { email: string; _id: Types.ObjectId };
   }
 }

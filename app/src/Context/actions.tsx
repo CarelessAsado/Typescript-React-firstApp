@@ -1,4 +1,4 @@
-export enum ActionsEnum {
+export const enum ActionsEnum {
   START_FETCH_ALL = "START_ALL_API_CALLS",
   FAILURE_FETCH_ALL = "FAILURE_FETCH_ALL",
   SUCCESS_FETCH_ALL = "SUCCESS_FETCH_ALL",

@@ -15,7 +15,7 @@ async function verifyToken(req: Request, res: Response, next: NextFunction) {
   }
   jwt.verify(
     token,
-    process.env.JWT_SECRET || "jwtsecret",
+    process.env.JWT_SECRET as string,
     function (err: any, user: any) {
       if (err) {
         return res.status(403).send("Token is not valid.");

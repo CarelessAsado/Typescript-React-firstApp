@@ -33,7 +33,7 @@ export const authAPI = {
       errorAssert?.current?.focus();
     }
   }, */
-  lrealLogin: async function (loginInput: ILoginInput) {
+  login: async function (loginInput: ILoginInput) {
     return loginAxiosInstance.post<UserWithoutTkn>(
       BACKEND_URL.login(),
       loginInput

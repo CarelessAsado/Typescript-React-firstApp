@@ -31,7 +31,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
   async function login(input: ILoginInput) {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
-      const { data, headers } = await authAPI.lrealLogin(input);
+      const { data, headers } = await authAPI.login(input);
       const user = { ...data, token: headers[headerKey] };
       dispatch({
         type: ActionsEnum.SUCCESS_LOGIN,
@@ -59,11 +59,11 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     localStorage.removeItem(LSTORAGE_KEY);
   }
   function renderError(error: any) {
-    alert("hubo un error");
     console.log(error);
+    console.log(error.response);
     dispatch({
       type: ActionsEnum.FAILURE_FETCH_ALL,
-      payload: error.response ? error.response.data : error.message,
+      payload: error?.response?.data?.message || "Something went wrong. ",
     });
   }
   return (

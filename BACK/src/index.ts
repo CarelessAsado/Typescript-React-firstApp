@@ -4,6 +4,7 @@ import connectDB from "./db/connect";
 const app = express();
 import cors from "cors";
 import verifyToken from "./middleware/verifyToken";
+import finalErrorHandler from "./ERRORS/finalErrorHandler";
 
 /*---------------------------------*/
 app.use(express.json());
@@ -30,3 +31,5 @@ const tasksRoutes = require("./routes/tasks");
 app.use("/api/v1", tasksRoutes);
 const usersRoutes = require("./routes/users");
 app.use("/api/v1", usersRoutes);
+
+app.use(finalErrorHandler);

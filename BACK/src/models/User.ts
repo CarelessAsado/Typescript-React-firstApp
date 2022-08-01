@@ -1,7 +1,7 @@
-import { model, Schema, Types } from "mongoose";
+import { model, Schema, Types,Document } from "mongoose";
 import bcrypt from "bcrypt";
 
-interface IUser {
+export interface IUser extends Document {
   username: string;
   password: string;
   email: string;
@@ -10,6 +10,7 @@ interface IUser {
   hashPass: () => Promise<void>;
   verifyPass: (password: string) => Promise<boolean>;
 }
+
 
 export const User = new Schema<IUser>({
   username: {
@@ -20,6 +21,7 @@ export const User = new Schema<IUser>({
   password: {
     type: String,
     required: [true, "Password cannot be an empty value. "],
+    select: false,
   },
   email: {
     type: String,

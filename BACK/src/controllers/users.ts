@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User, { IUser } from "../models/User";
 import { Request, Response } from "express";
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
   },
   getAllUsers: async (req: Request, res: Response): Promise<void> => {
     try {
-      const allUsers = await User.find();
+      const allUsers = await User.find<IUser>();
       res.json(allUsers);
     } catch (error: any) {
       console.log(error);
@@ -26,8 +26,8 @@ module.exports = {
   getSingleUser: async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     try {
-      const task = await User.findById(id);
-      res.json(task);
+      const userFound = await User.findById<IUser>(id);
+      res.json(userFound);
     } catch (error: any) {
       console.log(error);
       res.status(404).json(error.message);
