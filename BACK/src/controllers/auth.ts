@@ -27,8 +27,16 @@ module.exports = {
     /*---------------JWT INSTANCE METHOD-------------*/
     if (await user.verifyPass(password)) {
       const accessToken = user.generateAccessToken();
-
+      const newRefreshToken = user.generateRefreshToken();
       res.header("Access-Control-Expose-Headers", "auth-token");
+
+      //SET REFRESH TKN COOKIE
+      res.cookie("jwtRefreshToken", newRefreshToken, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        sameSite: "none",
+        secure: true,
+      });
 
       const cleanUser = user.toObject({
         transform: (doc) => {

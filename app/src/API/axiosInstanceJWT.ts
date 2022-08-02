@@ -7,6 +7,7 @@ const axiosInstanceJWT = axios.create({
   headers: {
     [headerKey]: "",
   },
+  withCredentials: true,
 });
 interface CommonHeaderProperties extends HeadersDefaults {
   [headerKey]: string;

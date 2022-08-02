@@ -3,6 +3,7 @@ export const FRONTEND_URL = process.env.NODE_ENV
   : "http://localhost:3000";
 
 export const jwtSecret = process.env.JWT_SECRET as string;
+export const HEADER_ACCESS_TOKEN = "auth-token";
 
 export const expirationTokens = {
   access: "2h",

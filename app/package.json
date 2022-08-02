@@ -1,5 +1,4 @@
 {
-  "proxy": "https://git.heroku.com/ts-firstapp.git",
   "name": "app",
   "version": "0.1.0",
   "private": true,
