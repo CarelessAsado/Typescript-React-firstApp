@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { Types } from "mongoose";
 import { Request, Response, NextFunction } from "express";
 import { HEADER_ACCESS_TOKEN, jwtSecret } from "../constants";
+import { CustomError } from "../ERRORS/customErrors";
 
 interface Itoken {
   _id: Types.ObjectId;
@@ -19,12 +20,12 @@ export default function verifyToken(
   console.log("VERIFY TOKEN MIDDLE");
   console.log(req.cookies, "COOKIES");
   if (!token) {
-    return res.status(401).send("Token was not provided.");
+    return next(new CustomError(401, "Token was not provided."));
   }
 
   jwt.verify(token, jwtSecret, function (err: any, user) {
     if (err) {
-      return res.status(403).send("Token is not valid.");
+      return next(new CustomError(403, "Token is not valid."));
     }
     const { _id, email } = user as Itoken;
     req.user = { _id, email };
