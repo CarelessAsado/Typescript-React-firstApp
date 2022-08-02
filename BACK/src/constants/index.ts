@@ -4,7 +4,7 @@ export const FRONTEND_URL = process.env.NODE_ENV
 
 export const jwtSecret = process.env.JWT_SECRET as string;
 export const HEADER_ACCESS_TOKEN = "auth-token";
-
+export const COOKIE_KEY = "jwtRefreshToken";
 export const expirationTokens = {
   access: "2h",
   refresh: "1d",

@@ -1,6 +1,12 @@
 import express from "express";
-const { registerUser, loginUser } = require("../controllers/auth");
+import * as authControllers from "../controllers/auth";
+
 const router = express.Router();
-router.post("/register", registerUser);
-router.post("/login", loginUser);
+
+router.post("/register", authControllers.registerUser);
+router.post("/login", authControllers.loginUser);
+
+/* PROTECT THIS ROUTE */
+router.get("/logout", authControllers.logout);
+
 module.exports = router;
