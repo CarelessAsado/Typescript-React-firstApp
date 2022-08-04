@@ -4,13 +4,6 @@ import { Request, Response, NextFunction } from "express";
 import { HEADER_ACCESS_TOKEN, jwtSecret } from "../constants";
 import { CustomError } from "../ERRORS/customErrors";
 
-interface Itoken {
-  _id: Types.ObjectId;
-  email: string;
-  iat: number;
-  exp: number;
-}
-
 export default function verifyToken(
   req: Request,
   res: Response,
@@ -23,7 +16,7 @@ export default function verifyToken(
     return next(new CustomError(401, "Token was not provided."));
   }
 
-  jwt.verify(token, jwtSecret, function (err: any, user) {
+  jwt.verify(token, jwtSecret, function (err, user) {
     if (err) {
       return next(new CustomError(403, "Token is not valid."));
     }

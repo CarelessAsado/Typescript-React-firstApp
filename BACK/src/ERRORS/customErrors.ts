@@ -10,3 +10,15 @@ export class Error400 extends CustomError {
     super(400, message);
   }
 }
+
+export class Error401 extends CustomError {
+  constructor(message: string) {
+    super(401, message);
+  }
+}
+
+export class Error403 extends CustomError {
+  constructor(message: string) {
+    super(403, message);
+  }
+}

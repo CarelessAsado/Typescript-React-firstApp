@@ -8,6 +8,7 @@ export interface IUser extends Document {
   password: string;
   email: string;
   tasks: Types.Array<Types.ObjectId>;
+  refreshToken: string[];
   /*------INSTANCE METHODS-----------------*/
   hashPass: () => Promise<void>;
   verifyPass: (password: string) => Promise<boolean>;
@@ -35,6 +36,7 @@ export const User = new Schema<IUser>({
     lowercase: true,
   },
   tasks: [{ type: "ObjectID", ref: "Task" }],
+  refreshToken: [String],
 });
 /*-------------------INSTANCE METHODS-----------------------*/
 User.methods.hashPass = async function () {
