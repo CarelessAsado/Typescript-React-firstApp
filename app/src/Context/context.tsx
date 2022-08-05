@@ -59,12 +59,11 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
       await authAPI.logout();
-    } catch (error) {
-      renderError(error);
-    } finally {
       dispatch({ type: ActionsEnum.LOG_OUT });
       setHeaders();
       localStorage.removeItem(LSTORAGE_KEY);
+    } catch (error) {
+      renderError(error);
     }
   }
   function renderError(error: any) {
