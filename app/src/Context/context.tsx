@@ -32,7 +32,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
       const { data, headers } = await authAPI.login(input);
-      const user = { ...data, token: headers[headerKey] };
+      const user = { ...data, accessToken: headers[headerKey] };
       dispatch({
         type: ActionsEnum.SUCCESS_LOGIN,
         payload: user,
@@ -56,9 +56,16 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
   }
 
   async function logout() {
-    dispatch({ type: ActionsEnum.LOG_OUT });
-    setHeaders();
-    localStorage.removeItem(LSTORAGE_KEY);
+    dispatch({ type: ActionsEnum.START_FETCH_ALL });
+    try {
+      await authAPI.logout();
+    } catch (error) {
+      renderError(error);
+    } finally {
+      dispatch({ type: ActionsEnum.LOG_OUT });
+      setHeaders();
+      localStorage.removeItem(LSTORAGE_KEY);
+    }
   }
   function renderError(error: any) {
     console.log(error);

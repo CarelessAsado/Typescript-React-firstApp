@@ -9,8 +9,14 @@ export const BACKEND_URL = {
   login() {
     return `${this.auth}/login`;
   },
+  logout() {
+    return `${this.auth}/logout`;
+  },
   register() {
     return `${this.auth}/register`;
+  },
+  refresh() {
+    return `${this.auth}/refresh`;
   },
 };
 export const BACKEND_ROOT =

@@ -6,7 +6,7 @@ export const API = {
   renderError: (dispatch: React.Dispatch<Actions>, error: any) => {
     dispatch({
       type: ActionsEnum.FAILURE_FETCH_ALL,
-      payload: error.response ? error.response.data : error.message,
+      payload: error?.response?.data?.message || "Something went wrong. ",
     });
   },
   /*-----------------POST NEW TASK------------*/

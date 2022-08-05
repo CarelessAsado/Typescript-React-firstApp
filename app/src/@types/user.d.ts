@@ -9,12 +9,13 @@ type IUser = {
   username: string;
   _id: string;
   email: string;
-  token: string;
+  accessToken: string;
 } | null;
 type UserNotNull = NonNullable<IUser>;
-type UserWithoutTkn = Omit<UserNotNull, "token">;
+type UserWithoutTkn = Omit<UserNotNull, "accessToken">;
+type AccessTkn = Pick<UserNotNull, "accessToken">;
 
-type IRegisterInput = Pick<IUser, "username" | "email"> & {
+type IRegisterInput = Pick<UserNotNull, "username" | "email"> & {
   password: string;
   confirmPassword: string;
 };

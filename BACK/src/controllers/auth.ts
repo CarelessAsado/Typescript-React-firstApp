@@ -83,7 +83,7 @@ export const logout = errorWrapper(async (req, res, next) => {
       filteredRefreshTokens.length,
       userFound.refreshToken.length,
       "ver q no coincidan x un nro!!!"
-    );
+    ); ✅
     userFound.refreshToken = [...filteredRefreshTokens];
     await userFound.save();
   }

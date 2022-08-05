@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import axiosInstanceJWT, { setHeaders } from "API/axiosInstanceJWT";
+import { setHeaders } from "API/axiosInstanceJWT";
 import { ActionsEnum } from "Context/actions";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 
@@ -17,7 +17,7 @@ export const PersistLogin = () => {
       /*HAY USER, CALL STATE MANAGEMENT*/
       const user: IUser = JSON.parse(maybeUser);
       if (user) {
-        setHeaders(user.token);
+        setHeaders(user.accessToken);
         dispatch({ type: ActionsEnum.SUCCESS_LOGIN, payload: user });
       }
       setIsLoading(false);

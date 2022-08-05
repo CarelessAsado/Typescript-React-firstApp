@@ -1,5 +1,6 @@
 import loginAxiosInstance from "./loginAxiosInstance";
 import { BACKEND_URL } from "config/constants";
+import axiosInstanceJWT from "./axiosInstanceJWT";
 export const authAPI = {
   /*-------------------------LOGOUT-----------------------------*/
   /* ver si envio la cookie asi la borro en el backend */
@@ -33,13 +34,19 @@ export const authAPI = {
       errorAssert?.current?.focus();
     }
   }, */
-  login: async function (loginInput: ILoginInput) {
-    return loginAxiosInstance.post<UserWithoutTkn>(
+  login: function (loginInput: ILoginInput) {
+    return axiosInstanceJWT.post<UserWithoutTkn>(
       BACKEND_URL.login(),
       loginInput
     );
   },
   register: async function (registerInput: IRegisterInput) {
     return loginAxiosInstance.post(BACKEND_URL.register(), registerInput);
+  },
+  logout: function () {
+    return axiosInstanceJWT.get<void>(BACKEND_URL.logout());
+  },
+  refresh: function () {
+    return axiosInstanceJWT.get<AccessTkn>(BACKEND_URL.refresh());
   },
 };

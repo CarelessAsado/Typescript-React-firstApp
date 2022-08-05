@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
-import { authAPI } from "API/authAPI";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Container,
   Form,
@@ -28,9 +27,8 @@ const RegisterLink = styled(Link)`
 `;
 
 export const Login = () => {
-  const navigate = useNavigate();
   const errorAssert = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const { dispatch, login, error, successRegister, isFetching } =
+  const { login, error, successRegister, isFetching } =
     useTareasGlobalContext();
   const [loginInput, setLoginInput] = useState<ILoginInput>({
     email: "",
