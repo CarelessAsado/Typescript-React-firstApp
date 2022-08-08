@@ -1,4 +1,4 @@
-import CreateNewTaskForm from "components/Form";
+import CreateNewTaskForm from "components/NewTaskForm";
 
 export const Main = () => {
   return (
