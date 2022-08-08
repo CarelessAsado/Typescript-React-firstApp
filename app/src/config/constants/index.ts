@@ -16,7 +16,7 @@ export const BACKEND_URL = {
     return `${this.auth}/register`;
   },
   refresh() {
-    return `${this.auth}/refresh`;
+    return `${this.auth}/refreshh`;
   },
 };
 export const BACKEND_ROOT =

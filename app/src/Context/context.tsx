@@ -1,5 +1,6 @@
 import { authAPI } from "API/authAPI";
 import { headerKey, setHeaders } from "API/axiosInstanceJWT";
+import { API } from "API/tasksAPI";
 import { LSTORAGE_KEY } from "config/constants";
 import { setHeadersAndLStorage } from "config/utils";
 import { createContext, useReducer } from "react";
@@ -11,6 +12,7 @@ type CreateContProps = {
   login(input: ILoginInput): Promise<void>;
   register(input: IRegisterInput): Promise<true | undefined>;
   logout(): Promise<void>;
+  getTasks(userId: string): Promise<void>;
 } & State;
 
 export const TareasContext = createContext({} as CreateContProps);
@@ -31,14 +33,15 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
   async function login(input: ILoginInput) {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
+      //dejar de recibir accessToken en HEADERS AXIOS
       const { data, headers } = await authAPI.login(input);
-      const user = { ...data, accessToken: headers[headerKey] };
+      const user = { ...data };
       dispatch({
         type: ActionsEnum.SUCCESS_LOGIN,
         payload: user,
       });
       /* SET HEADER AND LSTORAGE like authAPI.login,ver q guardo el token tmb con el user,creo q no lo necesito, si total lo uso solo p/el lstorage */
-      setHeadersAndLStorage(user);
+      setHeadersAndLStorage(user, headers[headerKey]);
     } catch (error) {
       renderError(error);
     }
@@ -66,12 +69,31 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
       renderError(error);
     }
   }
+  async function getTasks(userId: string) {
+    dispatch({ type: ActionsEnum.START_FETCH_ALL });
+    try {
+      const { data } = await API.realgetTasks(userId);
+      dispatch({
+        type: ActionsEnum.SUCCESS_FETCH_ALL,
+        payload: data,
+      });
+    } catch (error) {
+      renderError(error);
+    }
+  }
   function renderError(error: any) {
-    console.log(error);
+    console.log(error?.config?.sent, "VER EL CONFIG");
     console.log(error.response);
+    if (error?.config?.sent /* && error?.response?.status === 403 */) {
+      console.log("aca es un error pos-refresh-token api call", error.config);
+      return logout();
+    }
     dispatch({
       type: ActionsEnum.FAILURE_FETCH_ALL,
-      payload: error?.response?.data?.message || "Something went wrong. ",
+      payload:
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong. ",
     });
   }
   return (
@@ -82,6 +104,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
         login,
         register,
         logout,
+        getTasks,
       }}
     >
       {children}

@@ -70,6 +70,7 @@ export const API = {
       this.renderError(dispatch, error);
     }
   },
+  //BORRAR DSP
   getTasks: async function (
     userID: string,
     dispatch: React.Dispatch<Actions>
@@ -85,6 +86,10 @@ export const API = {
     } catch (error: any) {
       this.renderError(dispatch, error);
     }
+  },
+  realgetTasks: async function (userID: string) {
+    console.log("empezamos");
+    return axios.get(`/tasks/${userID}`);
   },
   deleteTask: async function (
     id: string,

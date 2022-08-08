@@ -5,9 +5,11 @@ import { ProtectedByAuth } from "components/ProtectedByAuth";
 import { PersistLogin } from "components/PersistLogin";
 import { Nav } from "components/Nav";
 import { UserProfile } from "pages/UserProfile";
+import { useInterceptor } from "Hooks/useInterceptor";
 
 function App() {
   const { user } = useTareasGlobalContext();
+  useInterceptor();
 
   return (
     <div className="App">
