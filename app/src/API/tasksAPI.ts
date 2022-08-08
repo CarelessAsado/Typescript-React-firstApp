@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "config/constants";
 import { ActionsEnum } from "Context/actions";
 import { Actions } from "Context/reducer";
 import axios from "./axiosInstanceJWT";
@@ -10,24 +11,10 @@ export const API = {
     });
   },
   /*-----------------POST NEW TASK------------*/
-  postNewTask: async function (
-    userId: string,
-    nameNewTask: string,
-    dispatch: React.Dispatch<Actions>
-  ): Promise<void> {
-    dispatch({ type: ActionsEnum.START_FETCH_ALL });
-    try {
-      const { data } = await axios.post(`/tasks/${userId}`, {
-        name: nameNewTask,
-      });
-      dispatch({
-        type: ActionsEnum.SUCCESS_POST_NEW_TASK,
-        payload: data,
-      });
-    } catch (error: any) {
-      console.log("hubo error", error.message);
-      this.renderError(dispatch, error);
-    }
+  postNewTask(nameNewTask: string) {
+    return axios.post<ITarea>(BACKEND_URL.tasks(), {
+      name: nameNewTask,
+    });
   },
   updateDONE: async function (
     idTask: string,
@@ -71,7 +58,7 @@ export const API = {
     }
   },
   getTasks: function () {
-    return axios.get<ITarea[]>(`/tasks`);
+    return axios.get<ITarea[]>(BACKEND_URL.tasks());
   },
   deleteTask: async function (
     id: string,

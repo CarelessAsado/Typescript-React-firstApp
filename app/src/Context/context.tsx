@@ -13,6 +13,7 @@ type CreateContProps = {
   register(input: IRegisterInput): Promise<true | undefined>;
   logout(): Promise<void>;
   getTasks(): Promise<void>;
+  postNewTask(nameNewTask: string): Promise<void>;
 } & State;
 
 export const TareasContext = createContext({} as CreateContProps);
@@ -85,6 +86,19 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     }
   }
 
+  async function postNewTask(nameNewTask: string) {
+    dispatch({ type: ActionsEnum.START_FETCH_ALL });
+    try {
+      const { data } = await API.postNewTask(nameNewTask);
+      dispatch({
+        type: ActionsEnum.SUCCESS_POST_NEW_TASK,
+        payload: data,
+      });
+    } catch (error: any) {
+      renderError(error);
+    }
+  }
+
   function renderError(error: any) {
     console.log(error?.config?.sent, "VER EL CONFIG");
     console.log(error.response);
@@ -109,6 +123,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
         register,
         logout,
         getTasks,
+        postNewTask,
       }}
     >
       {children}

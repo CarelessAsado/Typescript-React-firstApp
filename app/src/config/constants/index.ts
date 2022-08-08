@@ -18,6 +18,9 @@ export const BACKEND_URL = {
   refresh() {
     return `${this.auth}/refresh`;
   },
+  tasks() {
+    return "/tasks";
+  },
 };
 export const BACKEND_ROOT =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"

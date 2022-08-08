@@ -1,7 +1,8 @@
 import errorWrapper from "../ERRORS/asyncErrorWrapper";
+import { CustomError } from "../ERRORS/customErrors";
 
 /*VER XQ NO ME SALEN LOS METODOS DE MONGOOSE*/
-import Task from "../models/Task";
+import Task, { ITask } from "../models/Task";
 import User, { IUser } from "../models/User";
 module.exports = {
   addTask: errorWrapper(async (req, res, next) => {
@@ -19,17 +20,18 @@ module.exports = {
   getAllTasks: errorWrapper(async (req, res, next) => {
     const { _id: userID } = req.user;
 
-    const allTasks = await Task.find({ userID }, { userID: 0 });
+    const allTasks = await Task.find<ITask>({ userID }, { userID: 0 });
+
     res.status(200).json(allTasks);
   }),
   getSingleTask: errorWrapper(async (req, res, next) => {
     const { id } = req.params;
 
-    const task = await Task.findById(id);
+    const task = await Task.findById<ITask>(id);
     if (!task) {
-      res.status(404).json("Task does not exist.");
+      return next(new CustomError(404, "Task does not exist."));
     }
-    res.json(task);
+    res.status(200).json(task);
   }),
   updateDONEtask: errorWrapper(async (req, res, next) => {
     const { id } = req.params;

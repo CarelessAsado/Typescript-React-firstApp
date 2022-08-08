@@ -27,7 +27,7 @@ router.param(
   }
 );
 
-router.post("/tasks/:userID", addTask);
+router.post("/tasks", addTask);
 router.get("/task/:userID/:id", getSingleTask);
 router.delete("/tasks/:userID/:id", deleteTask);
 router.put("/tasks/done/:userID/:id", updateDONEtask);

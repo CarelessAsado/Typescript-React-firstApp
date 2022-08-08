@@ -1,5 +1,5 @@
-import mongoose, { Types } from "mongoose";
-interface ITask {
+import mongoose, { Types, Document } from "mongoose";
+export interface ITask extends Document {
   name: string;
   done: boolean;
   userID: Types.ObjectId;

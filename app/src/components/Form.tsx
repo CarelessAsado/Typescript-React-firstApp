@@ -72,7 +72,7 @@ const Notasks = styled(Error)`
 `;
 
 export const FormComponent = () => {
-  const { tareas, user, isFetching, error, dispatch, getTasks } =
+  const { tareas, user, isFetching, error, getTasks, postNewTask } =
     useTareasGlobalContext();
   const [inputTask, setInputTask] = useState<string>("");
   const userId = user?._id || "";
@@ -83,7 +83,7 @@ export const FormComponent = () => {
       
       return alert("Task is empty.");
     } */
-    API.postNewTask(userId, inputTask, dispatch);
+    postNewTask(inputTask);
     setInputTask("");
   };
 
