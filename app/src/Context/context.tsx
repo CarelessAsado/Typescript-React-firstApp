@@ -12,7 +12,7 @@ type CreateContProps = {
   login(input: ILoginInput): Promise<void>;
   register(input: IRegisterInput): Promise<true | undefined>;
   logout(): Promise<void>;
-  getTasks(userId: string): Promise<void>;
+  getTasks(): Promise<void>;
 } & State;
 
 export const TareasContext = createContext({} as CreateContProps);
@@ -69,11 +69,14 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
       renderError(error);
     }
   }
-  async function getTasks(userId: string) {
+
+  async function getTasks() {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
-      const { data } = await API.realgetTasks(userId);
-      dispatch({
+      const { data } = await API.getTasks();
+      console.log("volvio la data, vamos a despachar success fetch all");
+      console.log(data);
+      return dispatch({
         type: ActionsEnum.SUCCESS_FETCH_ALL,
         payload: data,
       });
@@ -81,6 +84,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
       renderError(error);
     }
   }
+
   function renderError(error: any) {
     console.log(error?.config?.sent, "VER EL CONFIG");
     console.log(error.response);

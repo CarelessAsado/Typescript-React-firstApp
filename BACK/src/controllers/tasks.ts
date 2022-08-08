@@ -17,11 +17,10 @@ module.exports = {
     res.json(addedTask);
   }),
   getAllTasks: errorWrapper(async (req, res, next) => {
-    const { userID } = req.params;
-    console.log(userID, "PARAMS");
+    const { _id: userID } = req.user;
 
     const allTasks = await Task.find({ userID }, { userID: 0 });
-    res.json(allTasks);
+    res.status(200).json(allTasks);
   }),
   getSingleTask: errorWrapper(async (req, res, next) => {
     const { id } = req.params;

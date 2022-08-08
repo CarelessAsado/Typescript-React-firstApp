@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { API } from "API/tasksAPI";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
@@ -71,7 +71,7 @@ const Notasks = styled(Error)`
   color: #385f92;
 `;
 
-export const FormComponent: React.FC = () => {
+export const FormComponent = () => {
   const { tareas, user, isFetching, error, dispatch, getTasks } =
     useTareasGlobalContext();
   const [inputTask, setInputTask] = useState<string>("");
@@ -88,9 +88,8 @@ export const FormComponent: React.FC = () => {
   };
 
   /*----------------GET ALL TASKS--------*/
-  const avoidLoop = useCallback(() => getTasks(userId), [userId]);
   useEffect(() => {
-    avoidLoop();
+    getTasks();
   }, []);
   /*-------------------------------------*/
   return (

@@ -70,26 +70,8 @@ export const API = {
       this.renderError(dispatch, error);
     }
   },
-  //BORRAR DSP
-  getTasks: async function (
-    userID: string,
-    dispatch: React.Dispatch<Actions>
-  ): Promise<void> {
-    dispatch({ type: ActionsEnum.START_FETCH_ALL });
-
-    try {
-      const { data } = await axios.get(`/tasks/${userID}`);
-      dispatch({
-        type: ActionsEnum.SUCCESS_FETCH_ALL,
-        payload: data,
-      });
-    } catch (error: any) {
-      this.renderError(dispatch, error);
-    }
-  },
-  realgetTasks: async function (userID: string) {
-    console.log("empezamos");
-    return axios.get(`/tasks/${userID}`);
+  getTasks: function () {
+    return axios.get<ITarea[]>(`/tasks`);
   },
   deleteTask: async function (
     id: string,

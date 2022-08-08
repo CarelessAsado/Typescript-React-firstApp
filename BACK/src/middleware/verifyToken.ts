@@ -12,6 +12,8 @@ export default function verifyToken(
   const token = req.header(HEADER_ACCESS_TOKEN) as string;
   console.log("VERIFY TOKEN MIDDLE");
   console.log(req.cookies, "COOKIES");
+  console.log(req.url);
+  console.log(req.ip);
   if (!token) {
     return next(new CustomError(401, "Token was not provided."));
   }
