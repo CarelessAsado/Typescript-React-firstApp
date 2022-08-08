@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
-import { API } from "API/tasksAPI";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 
 import Tasks from "./Tasks";
@@ -71,11 +70,10 @@ const Notasks = styled(Error)`
   color: #385f92;
 `;
 
-export const FormComponent = () => {
-  const { tareas, user, isFetching, error, getTasks, postNewTask } =
+const CreateNewTaskForm = () => {
+  const { tareas, isFetching, error, getTasks, postNewTask } =
     useTareasGlobalContext();
   const [inputTask, setInputTask] = useState<string>("");
-  const userId = user?._id || "";
   const addTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     /*-----HACER UN CUSTOM ALERT-----*/
@@ -122,3 +120,4 @@ export const FormComponent = () => {
     </Container>
   );
 };
+export default CreateNewTaskForm;

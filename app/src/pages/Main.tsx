@@ -1,9 +1,9 @@
-import { FormComponent } from "components/Form";
+import CreateNewTaskForm from "components/Form";
 
 export const Main = () => {
   return (
     <>
-      <FormComponent></FormComponent>
+      <CreateNewTaskForm></CreateNewTaskForm>
     </>
   );
 };
