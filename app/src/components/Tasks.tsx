@@ -67,7 +67,8 @@ interface Props {
   tarea: ITarea;
 }
 const Tasks: React.FC<Props> = ({ tarea }) => {
-  const { dispatch, user } = useTareasGlobalContext();
+  const { dispatch, user, deleteTask, updateDONE, updateNAME } =
+    useTareasGlobalContext();
   const { name, _id, done } = tarea;
   const editInput = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [editInputBis, setEditInputBis] = useState<string>(name);
@@ -88,7 +89,7 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
   function editName() {
     setIsEditing(false);
     if (editInput.current.value === name) return;
-    API.updateNAME(_id, userId, editInputBis, dispatch);
+    updateNAME(_id, editInputBis);
   }
   useEffect(() => {
     isEditing && editInput.current.focus();
@@ -110,10 +111,10 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
         <Update onClick={changeEditStatus}>
           <AiFillEdit />
         </Update>
-        <CheckDone onClick={() => API.updateDONE(_id, userId, !done, dispatch)}>
+        <CheckDone onClick={() => updateDONE(_id, !done)}>
           {done ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
         </CheckDone>
-        <Delete onClick={() => API.deleteTask(_id, userId, dispatch)}>
+        <Delete onClick={() => deleteTask(_id)}>
           <AiFillDelete></AiFillDelete>
         </Delete>
       </Functionality>

@@ -16,64 +16,20 @@ export const API = {
       name: nameNewTask,
     });
   },
-  updateDONE: async function (
-    idTask: string,
-    userID: string,
-    done: boolean,
-
-    dispatch: React.Dispatch<Actions>
-  ): Promise<void> {
-    dispatch({ type: ActionsEnum.START_FETCH_ALL });
-    try {
-      const { data } = await axios.put(`/tasks/done/${userID}/${idTask}`, {
-        done,
-      });
-      dispatch({
-        type: ActionsEnum.SUCCESS_UPDATE_DONE,
-        payload: data,
-      });
-    } catch (error: any) {
-      console.log("hubo error", error.message);
-      this.renderError(dispatch, error);
-    }
+  updateDONE(idTask: string, done: boolean) {
+    return axios.put<ITarea>(`${BACKEND_URL.tasks()}/done/${idTask}`, {
+      done,
+    });
   },
-  updateNAME: async function (
-    idTask: string,
-    userID: string,
-    name: string,
-
-    dispatch: React.Dispatch<Actions>
-  ): Promise<void> {
-    dispatch({ type: ActionsEnum.START_FETCH_ALL });
-    try {
-      const { data } = await axios.put(`/tasks/name/${userID}/${idTask}`, {
-        name,
-      });
-      dispatch({
-        type: ActionsEnum.SUCCESS_UPDATE_NAME,
-        payload: data,
-      });
-    } catch (error: any) {
-      this.renderError(dispatch, error);
-    }
+  updateNAME(idTask: string, name: string) {
+    return axios.put<ITarea>(`${BACKEND_URL.tasks()}/name/${idTask}`, {
+      name,
+    });
   },
   getTasks: function () {
     return axios.get<ITarea[]>(BACKEND_URL.tasks());
   },
-  deleteTask: async function (
-    id: string,
-    userID: string,
-    dispatch: React.Dispatch<Actions>
-  ): Promise<void> {
-    dispatch({ type: ActionsEnum.START_FETCH_ALL });
-    try {
-      await axios.delete(`/tasks/${userID}/${id}`);
-      dispatch({
-        type: ActionsEnum.SUCCESS_DELETE,
-        payload: id,
-      });
-    } catch (error: any) {
-      this.renderError(dispatch, error);
-    }
+  deleteTask: async function (id: string) {
+    return axios.delete<void>(`${BACKEND_URL.tasks()}/${id}`);
   },
 };

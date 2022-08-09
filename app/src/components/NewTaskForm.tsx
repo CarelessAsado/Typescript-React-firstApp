@@ -106,13 +106,11 @@ const NewTaskForm = () => {
         </LoadingRelative>
 
         {error && <Error aria-live="assertive">{error}</Error>}
-        {tareas.length > 0 ? (
-          tareas.map((i) => {
-            return <Tasks key={i._id} tarea={i} />;
-          })
-        ) : (
-          <Notasks>No tasks saved yet.</Notasks>
-        )}
+        {tareas.length > 0
+          ? tareas.map((i) => {
+              return <Tasks key={i._id} tarea={i} />;
+            })
+          : !isFetching && <Notasks>No tasks saved yet.</Notasks>}
       </Form>
     </Container>
   );

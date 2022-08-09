@@ -14,6 +14,9 @@ type CreateContProps = {
   logout(): Promise<void>;
   getTasks(): Promise<void>;
   postNewTask(nameNewTask: string): Promise<void>;
+  deleteTask(id: string): Promise<void>;
+  updateDONE(idTask: string, done: boolean): Promise<void>;
+  updateNAME(idTask: string, name: string): Promise<void>;
 } & State;
 
 export const TareasContext = createContext({} as CreateContProps);
@@ -99,6 +102,45 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     }
   }
 
+  async function deleteTask(id: string) {
+    dispatch({ type: ActionsEnum.START_FETCH_ALL });
+    try {
+      await API.deleteTask(id);
+      dispatch({
+        type: ActionsEnum.SUCCESS_DELETE,
+        payload: id,
+      });
+    } catch (error: any) {
+      renderError(error);
+    }
+  }
+
+  async function updateDONE(idTask: string, done: boolean) {
+    dispatch({ type: ActionsEnum.START_FETCH_ALL });
+    try {
+      const { data } = await API.updateDONE(idTask, done);
+      dispatch({
+        type: ActionsEnum.SUCCESS_UPDATE_DONE,
+        payload: data,
+      });
+    } catch (error: any) {
+      renderError(error);
+    }
+  }
+
+  async function updateNAME(idTask: string, name: string) {
+    dispatch({ type: ActionsEnum.START_FETCH_ALL });
+    try {
+      const { data } = await API.updateNAME(idTask, name);
+      dispatch({
+        type: ActionsEnum.SUCCESS_UPDATE_NAME,
+        payload: data,
+      });
+    } catch (error: any) {
+      renderError(error);
+    }
+  }
+
   function renderError(error: any) {
     console.log(error?.config?.sent, "VER EL CONFIG");
     console.log(error.response);
@@ -124,6 +166,9 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
         logout,
         getTasks,
         postNewTask,
+        deleteTask,
+        updateDONE,
+        updateNAME,
       }}
     >
       {children}

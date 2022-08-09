@@ -1,9 +1,9 @@
-import CreateNewTaskForm from "components/NewTaskForm";
+import NewTaskForm from "components/NewTaskForm";
 
 export const Main = () => {
   return (
     <>
-      <CreateNewTaskForm></CreateNewTaskForm>
+      <NewTaskForm></NewTaskForm>
     </>
   );
 };

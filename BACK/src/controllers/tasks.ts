@@ -37,26 +37,38 @@ export const updateDONEtask = errorWrapper(async (req, res, next) => {
   const { id } = req.params;
   const { done } = req.body;
 
-  const taskToUpdate = await Task.findByIdAndUpdate(
+  const taskToUpdate = await Task.findByIdAndUpdate<ITask>(
     id,
     { done },
     { new: true }
   );
+
+  if (!taskToUpdate) {
+    return next(new CustomError(404, "Task does not exist."));
+  }
+
   return res.json(taskToUpdate);
 });
+
 export const updateNAMEtask = errorWrapper(async (req, res, next) => {
   const { id } = req.params;
   const { name } = req.body;
 
   const taskToUpdate = await Task.findById(id);
-  taskToUpdate!.name = name;
-  await taskToUpdate?.save();
+
+  if (!taskToUpdate) {
+    return next(new CustomError(404, "Task does not exist."));
+  }
+
+  taskToUpdate.name = name;
+  await taskToUpdate.save();
   return res.json(taskToUpdate);
 });
+
 export const deleteTask = errorWrapper(async (req, res, next) => {
   const { id } = req.params;
-
+  //check ownership?
   await Task.findByIdAndDelete(id);
   await User.findByIdAndUpdate(req.user._id, { $pull: { tasks: id } });
-  return res.sendStatus(200);
+  return res.sendStatus(204);
 });

@@ -1,5 +1,5 @@
 import { authAPI } from "API/authAPI";
-import axiosPOSTLogin, { headerKey } from "API/axiosInstanceJWT";
+import axiosPOSTLogin, { headerKey, setHeaders } from "API/axiosInstanceJWT";
 import { BACKEND_URL } from "config/constants";
 import { useRef } from "react";
 
@@ -26,6 +26,7 @@ export const useInterceptor = () => {
             console.log(data, "ACCESS TOKEN AFTER REFRESH");
             if (data?.accessToken) {
               previousRequest.headers[headerKey] = data.accessToken;
+              setHeaders(data.accessToken);
             }
             return axiosPOSTLogin(previousRequest);
           } catch (error) {

@@ -24,7 +24,7 @@ router.post("/", tasksControllers.addTask);
 router.get("/", tasksControllers.getAllTasks);
 router.delete("/:id", tasksControllers.deleteTask);
 router.get("/task/:userID/:id", tasksControllers.getSingleTask);
-router.put("/done/:userID/:id", tasksControllers.updateDONEtask);
-router.put("/name/:userID/:id", tasksControllers.updateNAMEtask);
+router.put("/done/:id", tasksControllers.updateDONEtask);
+router.put("/name/:id", tasksControllers.updateNAMEtask);
 
 module.exports = router;
