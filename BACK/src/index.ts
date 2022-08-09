@@ -31,7 +31,7 @@ app.use("/api/v1/auth", authRoutes);
 /*---MIDDLEWARE-*/
 app.use(verifyToken);
 const tasksRoutes = require("./routes/tasks");
-app.use("/api/v1", tasksRoutes);
+app.use("/api/v1/tasks", tasksRoutes);
 const usersRoutes = require("./routes/users");
 app.use("/api/v1", usersRoutes);
 

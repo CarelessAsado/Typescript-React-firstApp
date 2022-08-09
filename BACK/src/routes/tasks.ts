@@ -2,14 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { Error403 } from "../ERRORS/customErrors";
 
 const router = express.Router();
-const {
-  addTask,
-  getAllTasks,
-  getSingleTask,
-  updateDONEtask,
-  updateNAMEtask,
-  deleteTask,
-} = require("../controllers/tasks");
+import * as tasksControllers from "../controllers/tasks";
 
 //SOLO SE ACTIVA SI LA ROUTE TIENE COMO PARAMS userID, x ej get("/tasks"), esta eximido
 router.param(
@@ -27,11 +20,11 @@ router.param(
   }
 );
 
-router.post("/tasks", addTask);
-router.get("/task/:userID/:id", getSingleTask);
-router.delete("/tasks/:userID/:id", deleteTask);
-router.put("/tasks/done/:userID/:id", updateDONEtask);
-router.put("/tasks/name/:userID/:id", updateNAMEtask);
-router.get("/tasks", getAllTasks);
+router.post("/", tasksControllers.addTask);
+router.get("/", tasksControllers.getAllTasks);
+router.delete("/:id", tasksControllers.deleteTask);
+router.get("/task/:userID/:id", tasksControllers.getSingleTask);
+router.put("/done/:userID/:id", tasksControllers.updateDONEtask);
+router.put("/name/:userID/:id", tasksControllers.updateNAMEtask);
 
 module.exports = router;
