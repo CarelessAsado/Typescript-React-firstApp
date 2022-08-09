@@ -2,30 +2,18 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 
-import Tasks from "./Tasks";
-
-const Container = styled.div`
-  background-color: #f1f5ff;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  /*  align-items: center; */
-  padding: 0 10px;
-`;
 const Form = styled.form`
-  margin: 100px 0;
-  min-height: 60vh;
+  margin: 0 auto;
   align-self: baseline;
   max-width: 1000px;
   width: 100%;
-  background-color: white;
+  background-color: #d4d2c7;
 `;
 const Decoration = styled.div`
   border: 1px solid black;
   display: flex;
   width: 80%;
-  margin: 80px auto;
+  margin: 50px auto;
   font-size: 1.5rem;
 `;
 const Input = styled.input`
@@ -48,7 +36,7 @@ const SubmitBtn = styled.button`
   }
 `;
 const LoadingRelative = styled.div`
-  padding: 30px 10px;
+  padding: 20px 10px;
   position: relative;
 `;
 const Loading = styled.h2`
@@ -57,7 +45,6 @@ const Loading = styled.h2`
   transform: translateY(-50%);
   left: 10px;
   width: 80%;
-
   color: #6e6a7a;
 `;
 const Error = styled.div`
@@ -66,13 +53,9 @@ const Error = styled.div`
   margin: 10px;
   font-size: 1.5rem;
 `;
-const Notasks = styled(Error)`
-  color: #385f92;
-`;
 
 const NewTaskForm = () => {
-  const { tareas, isFetching, error, getTasks, postNewTask } =
-    useTareasGlobalContext();
+  const { isFetching, error, getTasks, postNewTask } = useTareasGlobalContext();
   const [inputTask, setInputTask] = useState<string>("");
   const addTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,31 +71,24 @@ const NewTaskForm = () => {
   }, []);
   /*-------------------------------------*/
   return (
-    <Container>
-      <Form onSubmit={addTask}>
-        <Decoration>
-          <Input
-            type="text"
-            placeholder="Task..."
-            value={inputTask}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setInputTask(e.target.value)
-            }
-          ></Input>
-          <SubmitBtn>Add task</SubmitBtn>
-        </Decoration>
-        <LoadingRelative>
-          {isFetching && <Loading>Loading...</Loading>}
-        </LoadingRelative>
+    <Form onSubmit={addTask}>
+      <Decoration>
+        <Input
+          type="text"
+          placeholder="Task..."
+          value={inputTask}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setInputTask(e.target.value)
+          }
+        ></Input>
+        <SubmitBtn>Add task</SubmitBtn>
+      </Decoration>
+      <LoadingRelative>
+        {isFetching && <Loading>Loading...</Loading>}
+      </LoadingRelative>
 
-        {error && <Error aria-live="assertive">{error}</Error>}
-        {tareas.length > 0
-          ? tareas.map((i) => {
-              return <Tasks key={i._id} tarea={i} />;
-            })
-          : !isFetching && <Notasks>No tasks saved yet.</Notasks>}
-      </Form>
-    </Container>
+      {error && <Error aria-live="assertive">{error}</Error>}
+    </Form>
   );
 };
 export default NewTaskForm;

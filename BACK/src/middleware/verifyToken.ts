@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { Types } from "mongoose";
 import { Request, Response, NextFunction } from "express";
 import { HEADER_ACCESS_TOKEN, jwtSecret } from "../constants";
 import { CustomError } from "../ERRORS/customErrors";
