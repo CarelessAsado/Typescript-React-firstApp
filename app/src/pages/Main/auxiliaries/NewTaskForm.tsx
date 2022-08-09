@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
+import Spinner from "components/loaders/loader";
 
 const Form = styled.form`
   margin: 0 auto;
-  align-self: baseline;
   max-width: 1000px;
   width: 100%;
   background-color: #d4d2c7;
@@ -36,15 +36,14 @@ const SubmitBtn = styled.button`
   }
 `;
 const LoadingRelative = styled.div`
-  padding: 20px 10px;
+  padding: 30px 10px;
   position: relative;
 `;
 const Loading = styled.h2`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 10px;
-  width: 80%;
+  left: 50%;
   color: #6e6a7a;
 `;
 const Error = styled.div`
@@ -84,7 +83,11 @@ const NewTaskForm = () => {
         <SubmitBtn>Add task</SubmitBtn>
       </Decoration>
       <LoadingRelative>
-        {isFetching && <Loading>Loading...</Loading>}
+        {isFetching && (
+          <Loading>
+            <Spinner fz="3rem" h="100%" />
+          </Loading>
+        )}
       </LoadingRelative>
 
       {error && <Error aria-live="assertive">{error}</Error>}

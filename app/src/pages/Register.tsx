@@ -93,9 +93,7 @@ export const Register = () => {
         ></Input>
         <Bottom>
           Already have an account?
-          <RegisterLink to={FRONTEND_URL.register}>
-            Log in here.
-          </RegisterLink>{" "}
+          <RegisterLink to={FRONTEND_URL.login}>Log in here.</RegisterLink>{" "}
         </Bottom>
       </Form>
     </Container>
