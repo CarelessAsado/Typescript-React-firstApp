@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
-import { API } from "API/tasksAPI";
+
 interface StyledProps {
   done: boolean;
   isEditing: boolean;
@@ -67,14 +67,15 @@ interface Props {
   tarea: ITarea;
 }
 const Tasks: React.FC<Props> = ({ tarea }) => {
-  const { dispatch, user, deleteTask, updateDONE, updateNAME } =
+  const { /* user, */ deleteTask, updateDONE, updateNAME } =
     useTareasGlobalContext();
   const { name, _id, done } = tarea;
   const editInput = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [editInputBis, setEditInputBis] = useState<string>(name);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clicked, setClicked] = useState<boolean>(false);
-  const userId = user?._id || "";
+  /*  AGREGAR CUANDO HAGA CHECK OWNERSHIP
+ const userId = user?._id || ""; */
   function changeEditStatus() {
     if (isEditing && clicked) {
       return;
