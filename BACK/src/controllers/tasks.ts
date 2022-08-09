@@ -33,6 +33,7 @@ export const getSingleTask = errorWrapper(async (req, res, next) => {
   }
   res.status(200).json(task);
 });
+
 export const updateDONEtask = errorWrapper(async (req, res, next) => {
   const { id } = req.params;
   const { done } = req.body;
@@ -52,7 +53,7 @@ export const updateDONEtask = errorWrapper(async (req, res, next) => {
 
 export const updateNAMEtask = errorWrapper(async (req, res, next) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const { name, done } = req.body;
 
   const taskToUpdate = await Task.findById(id);
 
@@ -61,7 +62,27 @@ export const updateNAMEtask = errorWrapper(async (req, res, next) => {
   }
 
   taskToUpdate.name = name;
+  taskToUpdate.done = done;
+
   await taskToUpdate.save();
+  return res.json(taskToUpdate);
+});
+
+export const updateTask = errorWrapper(async (req, res, next) => {
+  const { id } = req.params;
+  const { name, done } = req.body;
+  console.log(req.body, "estamos en update");
+  const taskToUpdate = await Task.findById(id);
+
+  if (!taskToUpdate) {
+    return next(new CustomError(404, "Task does not exist."));
+  }
+
+  taskToUpdate.name = name;
+  taskToUpdate.done = done;
+
+  await taskToUpdate.save();
+  console.log(taskToUpdate, "ver q done este bien");
   return res.json(taskToUpdate);
 });
 

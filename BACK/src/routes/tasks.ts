@@ -23,6 +23,7 @@ router.param(
 router.post("/", tasksControllers.addTask);
 router.get("/", tasksControllers.getAllTasks);
 router.delete("/:id", tasksControllers.deleteTask);
+router.put("/:id", tasksControllers.updateTask);
 router.get("/task/:userID/:id", tasksControllers.getSingleTask);
 router.put("/done/:id", tasksControllers.updateDONEtask);
 router.put("/name/:id", tasksControllers.updateNAMEtask);

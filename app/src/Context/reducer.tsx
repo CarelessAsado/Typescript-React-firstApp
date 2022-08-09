@@ -9,8 +9,7 @@ export type Actions =
   | { type: ActionsEnum.LOG_OUT }
   | { type: ActionsEnum.SUCCESS_REGISTER }
   | { type: ActionsEnum.SUCCESS_POST_NEW_TASK; payload: ITarea }
-  | { type: ActionsEnum.SUCCESS_UPDATE_DONE; payload: ITarea }
-  | { type: ActionsEnum.SUCCESS_UPDATE_NAME; payload: ITarea }
+  | { type: ActionsEnum.SUCCESS_UPDATE; payload: ITarea }
   | { type: ActionsEnum.SUCCESS_DELETE; payload: string };
 
 export const taskReducer = (state: State, action: Actions) => {
@@ -68,24 +67,17 @@ export const taskReducer = (state: State, action: Actions) => {
         isFetching: false,
         tareas: copia.filter((i: ITarea) => i._id !== action.payload),
       };
-    /*-----------------------UPDATE DONE------------------------------------*/
-    case ActionsEnum.SUCCESS_UPDATE_DONE:
+    /*-----------------------UPDATE TASK------------------------------------*/
+
+    case ActionsEnum.SUCCESS_UPDATE:
       return {
         ...state,
         isFetching: false,
         tareas: copia.map((i: ITarea) =>
-          i._id === action.payload._id ? { ...i, done: !i.done } : i
+          i._id === action.payload._id ? action.payload : i
         ),
       };
-    /*-----------------------UPDATE NAME----------------------------------*/
-    case ActionsEnum.SUCCESS_UPDATE_NAME:
-      return {
-        ...state,
-        isFetching: false,
-        tareas: copia.map((i: ITarea) =>
-          i._id === action.payload._id ? { ...action.payload } : i
-        ),
-      };
+
     default:
       throw Error("Type does not exist.");
   }

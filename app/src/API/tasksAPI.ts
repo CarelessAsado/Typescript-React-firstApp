@@ -16,6 +16,7 @@ export const API = {
       name: nameNewTask,
     });
   },
+  /*-------------------------------------------  */
   updateDONE(idTask: string, done: boolean) {
     return axios.put<ITarea>(`${BACKEND_URL.tasks()}/done/${idTask}`, {
       done,
@@ -25,6 +26,10 @@ export const API = {
     return axios.put<ITarea>(`${BACKEND_URL.tasks()}/name/${idTask}`, {
       name,
     });
+  },
+  /* ------------------------------------------- */
+  updateTask(task: ITarea) {
+    return axios.put<ITarea>(`${BACKEND_URL.tasks()}/${task._id}`, task);
   },
   getTasks: function () {
     return axios.get<ITarea[]>(BACKEND_URL.tasks());

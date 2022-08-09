@@ -15,8 +15,7 @@ type CreateContProps = {
   getTasks(): Promise<void>;
   postNewTask(nameNewTask: string): Promise<void>;
   deleteTask(id: string): Promise<void>;
-  updateDONE(idTask: string, done: boolean): Promise<void>;
-  updateNAME(idTask: string, name: string): Promise<void>;
+  updateTask(task: ITarea): Promise<void>;
 } & State;
 
 export const TareasContext = createContext({} as CreateContProps);
@@ -34,6 +33,7 @@ const defaultState: State = {
 };
 const TareaContextProvider = ({ children }: ProviderProps) => {
   const [state, dispatch] = useReducer(taskReducer, defaultState);
+
   async function login(input: ILoginInput) {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
@@ -115,25 +115,14 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     }
   }
 
-  async function updateDONE(idTask: string, done: boolean) {
+  async function updateTask(task: ITarea) {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
-      const { data } = await API.updateDONE(idTask, done);
+      console.log(task, "ver porque viene en objeto");
+      const { data } = await API.updateTask(task);
+      console.log(data.done, "ver q vuelve correctamente");
       dispatch({
-        type: ActionsEnum.SUCCESS_UPDATE_DONE,
-        payload: data,
-      });
-    } catch (error: any) {
-      renderError(error);
-    }
-  }
-
-  async function updateNAME(idTask: string, name: string) {
-    dispatch({ type: ActionsEnum.START_FETCH_ALL });
-    try {
-      const { data } = await API.updateNAME(idTask, name);
-      dispatch({
-        type: ActionsEnum.SUCCESS_UPDATE_NAME,
+        type: ActionsEnum.SUCCESS_UPDATE,
         payload: data,
       });
     } catch (error: any) {
@@ -167,8 +156,7 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
         getTasks,
         postNewTask,
         deleteTask,
-        updateDONE,
-        updateNAME,
+        updateTask,
       }}
     >
       {children}

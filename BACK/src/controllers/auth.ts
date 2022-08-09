@@ -11,12 +11,13 @@ export const registerUser = errorWrapper(async (req, res, next) => {
     return next(new CustomError(401, "Passwords do not match. "));
   }
   /*---NO HACE FALTA BUSCAR USER CON EMAIL PREVIAMENTE YA Q AL
-        GUARDARLO AUTOMATICAMENTE MONGOOSE VA TIRAR ERROR*/
+        GUARDARLO AUTOMATICAMENTE MONGOOSE VA TIRAR ERROR DUPLICATE*/
   const newUser = new User({ username, password, email });
   await newUser.hashPass();
   await newUser.save();
   return res.sendStatus(201);
 });
+
 export const loginUser = errorWrapper(async (req, res, next) => {
   const cookies = req.cookies;
   const maybeLeftOverRT = cookies?.[COOKIE_RT_KEY];
