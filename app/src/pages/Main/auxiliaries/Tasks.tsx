@@ -73,30 +73,43 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
 
   const editInput = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [editInputBis, setEditInputBis] = useState<string>(name);
+  const [justEdited, setJustEdited] = useState(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clicked, setClicked] = useState<boolean>(false);
 
   const userId = user?._id || "";
+
   function changeEditStatus() {
-    console.log("funcio, q no cambia nada el object tarea");
-    if (isEditing && clicked) {
+    if (isEditing) {
       return;
+      //WE RETURN SINCE THE BLUR EVENT on the input WILL AUTOMATICALLY CALL THE UPDATE API (we dont wanna call it twice)
     }
     if (!isEditing && clicked) {
       setClicked(false);
+      //means we originally clicked the pen, so we set clicked back to its original state, and let the blur event on the input handle the update
       return;
     }
-    setClicked(true);
-    return setIsEditing(true);
+    if (!justEdited) {
+      setClicked(true);
+      return setIsEditing(true);
+    }
   }
+
   function editName() {
-    console.log("funcion editNAME", done);
     setIsEditing(false);
+    setJustEdited(true);
+    setTimeout(() => {
+      //esto es p/el caso q el blur ev coincida con el click ev en el icono de update. En ese caso, durante medio segundo dejamos justEdited true, p/q la funcion en el click handler no vuelva a cambiar el isEditing a true (el Blur ev sucede primero, y cambia isEditing a false. Entonces pasaba q el click ev veia isEditing false, y lo cambiaba a true)
+      setJustEdited(false);
+    }, 500);
     if (editInput.current.value === name) return;
     updateTask({ ...tarea, name: editInputBis }, userId);
   }
+
   useEffect(() => {
-    isEditing && editInput.current.focus();
+    if (isEditing) {
+      editInput.current.focus();
+    }
   }, [isEditing]);
 
   return (
