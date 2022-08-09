@@ -33,7 +33,6 @@ export const loginUser = errorWrapper(async (req, res, next) => {
   if (await user.verifyPass(password)) {
     const accessToken = user.generateAccessToken();
     const newRefreshToken = user.generateRefreshToken();
-    res.header("Access-Control-Expose-Headers", "auth-token");
 
     const filteredRefreshTokens = !maybeLeftOverRT
       ? user.refreshToken
@@ -54,7 +53,7 @@ export const loginUser = errorWrapper(async (req, res, next) => {
       },
     });
 
-    return res.status(200).header("auth-token", accessToken).json(cleanUser);
+    return res.status(200).json({ user: cleanUser, accessToken });
   } else {
     return next(new Error401(errorMessage));
   }

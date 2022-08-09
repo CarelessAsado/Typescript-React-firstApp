@@ -35,7 +35,10 @@ export const authAPI = {
     }
   }, */
   login: function (loginInput: ILoginInput) {
-    return axiosInstanceJWT.post<UserNotNull>(BACKEND_URL.login(), loginInput);
+    return axiosInstanceJWT.post<LoginSuccessful>(
+      BACKEND_URL.login(),
+      loginInput
+    );
   },
   register: async function (registerInput: IRegisterInput) {
     return loginAxiosInstance.post(BACKEND_URL.register(), registerInput);

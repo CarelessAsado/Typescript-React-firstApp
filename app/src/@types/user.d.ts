@@ -14,6 +14,10 @@ type UserNotNull = NonNullable<IUser>;
 
 type AccessTkn = { accessToken: string };
 
+type LoginSuccessful = {
+  user: UserNotNull;
+} & AccessTkn;
+
 type IRegisterInput = Pick<UserNotNull, "username" | "email"> & {
   password: string;
   confirmPassword: string;

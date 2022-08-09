@@ -1,5 +1,5 @@
 import { authAPI } from "API/authAPI";
-import { headerKey, setHeaders } from "API/axiosInstanceJWT";
+import { setHeaders } from "API/axiosInstanceJWT";
 import { API } from "API/tasksAPI";
 import { LSTORAGE_KEY } from "config/constants";
 import { setHeadersAndLStorage } from "config/utils";
@@ -38,14 +38,14 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
       //dejar de recibir accessToken en HEADERS AXIOS
-      const { data, headers } = await authAPI.login(input);
-      const user = { ...data };
+      const { data } = await authAPI.login(input);
+      const user = data.user;
       dispatch({
         type: ActionsEnum.SUCCESS_LOGIN,
         payload: user,
       });
       /* SET HEADER AND LSTORAGE like authAPI.login,ver q guardo el token tmb con el user,creo q no lo necesito, si total lo uso solo p/el lstorage */
-      setHeadersAndLStorage(user, headers[headerKey]);
+      setHeadersAndLStorage(user, data.accessToken);
     } catch (error) {
       renderError(error);
     }
