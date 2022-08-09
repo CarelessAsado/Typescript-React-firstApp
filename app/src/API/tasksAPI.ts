@@ -16,25 +16,17 @@ export const API = {
       name: nameNewTask,
     });
   },
-  /*-------------------------------------------  */
-  updateDONE(idTask: string, done: boolean) {
-    return axios.put<ITarea>(`${BACKEND_URL.tasks()}/done/${idTask}`, {
-      done,
-    });
-  },
-  updateNAME(idTask: string, name: string) {
-    return axios.put<ITarea>(`${BACKEND_URL.tasks()}/name/${idTask}`, {
-      name,
-    });
-  },
   /* ------------------------------------------- */
-  updateTask(task: ITarea) {
-    return axios.put<ITarea>(`${BACKEND_URL.tasks()}/${task._id}`, task);
+  updateTask(task: ITarea, userID: string) {
+    return axios.put<ITarea>(
+      `${BACKEND_URL.tasks()}/${userID}/${task._id}`,
+      task
+    );
   },
   getTasks: function () {
     return axios.get<ITarea[]>(BACKEND_URL.tasks());
   },
-  deleteTask: async function (id: string) {
-    return axios.delete<void>(`${BACKEND_URL.tasks()}/${id}`);
+  deleteTask: async function (id: string, userID: string) {
+    return axios.delete<void>(`${BACKEND_URL.tasks()}/${userID}/${id}`);
   },
 };

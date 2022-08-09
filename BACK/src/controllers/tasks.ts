@@ -17,6 +17,7 @@ export const addTask = errorWrapper(async (req, res, next) => {
   await userPop?.save();
   res.json(addedTask);
 });
+
 export const getAllTasks = errorWrapper(async (req, res, next) => {
   const { _id: userID } = req.user;
 
@@ -24,6 +25,7 @@ export const getAllTasks = errorWrapper(async (req, res, next) => {
 
   res.status(200).json(allTasks);
 });
+
 export const getSingleTask = errorWrapper(async (req, res, next) => {
   const { id } = req.params;
 
@@ -32,40 +34,6 @@ export const getSingleTask = errorWrapper(async (req, res, next) => {
     return next(new CustomError(404, "Task does not exist."));
   }
   res.status(200).json(task);
-});
-
-export const updateDONEtask = errorWrapper(async (req, res, next) => {
-  const { id } = req.params;
-  const { done } = req.body;
-
-  const taskToUpdate = await Task.findByIdAndUpdate<ITask>(
-    id,
-    { done },
-    { new: true }
-  );
-
-  if (!taskToUpdate) {
-    return next(new CustomError(404, "Task does not exist."));
-  }
-
-  return res.json(taskToUpdate);
-});
-
-export const updateNAMEtask = errorWrapper(async (req, res, next) => {
-  const { id } = req.params;
-  const { name, done } = req.body;
-
-  const taskToUpdate = await Task.findById(id);
-
-  if (!taskToUpdate) {
-    return next(new CustomError(404, "Task does not exist."));
-  }
-
-  taskToUpdate.name = name;
-  taskToUpdate.done = done;
-
-  await taskToUpdate.save();
-  return res.json(taskToUpdate);
 });
 
 export const updateTask = errorWrapper(async (req, res, next) => {

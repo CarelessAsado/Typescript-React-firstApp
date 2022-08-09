@@ -67,7 +67,7 @@ interface Props {
   tarea: ITarea;
 }
 const Tasks: React.FC<Props> = ({ tarea }) => {
-  const { /* user, */ deleteTask, updateTask } = useTareasGlobalContext();
+  const { user, deleteTask, updateTask } = useTareasGlobalContext();
   console.log(tarea, "ver porque se rearma");
   const { name, _id, done } = tarea;
 
@@ -75,8 +75,8 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
   const [editInputBis, setEditInputBis] = useState<string>(name);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clicked, setClicked] = useState<boolean>(false);
-  /*  AGREGAR CUANDO HAGA CHECK OWNERSHIP
- const userId = user?._id || ""; */
+
+  const userId = user?._id || "";
   function changeEditStatus() {
     console.log("funcio, q no cambia nada el object tarea");
     if (isEditing && clicked) {
@@ -93,7 +93,7 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
     console.log("funcion editNAME", done);
     setIsEditing(false);
     if (editInput.current.value === name) return;
-    updateTask({ ...tarea, name: editInputBis });
+    updateTask({ ...tarea, name: editInputBis }, userId);
   }
   useEffect(() => {
     isEditing && editInput.current.focus();
@@ -115,10 +115,12 @@ const Tasks: React.FC<Props> = ({ tarea }) => {
         <Update onClick={changeEditStatus}>
           <AiFillEdit />
         </Update>
-        <CheckDone onClick={() => updateTask({ ...tarea, done: !tarea.done })}>
+        <CheckDone
+          onClick={() => updateTask({ ...tarea, done: !tarea.done }, userId)}
+        >
           {done ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
         </CheckDone>
-        <Delete onClick={() => deleteTask(_id)}>
+        <Delete onClick={() => deleteTask(_id, userId)}>
           <AiFillDelete></AiFillDelete>
         </Delete>
       </Functionality>

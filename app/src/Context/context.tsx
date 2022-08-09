@@ -14,8 +14,8 @@ type CreateContProps = {
   logout(): Promise<void>;
   getTasks(): Promise<void>;
   postNewTask(nameNewTask: string): Promise<void>;
-  deleteTask(id: string): Promise<void>;
-  updateTask(task: ITarea): Promise<void>;
+  deleteTask(id: string, userID: string): Promise<void>;
+  updateTask(task: ITarea, userID: string): Promise<void>;
 } & State;
 
 export const TareasContext = createContext({} as CreateContProps);
@@ -102,10 +102,10 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     }
   }
 
-  async function deleteTask(id: string) {
+  async function deleteTask(id: string, userID: string) {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
-      await API.deleteTask(id);
+      await API.deleteTask(id, userID);
       dispatch({
         type: ActionsEnum.SUCCESS_DELETE,
         payload: id,
@@ -115,11 +115,11 @@ const TareaContextProvider = ({ children }: ProviderProps) => {
     }
   }
 
-  async function updateTask(task: ITarea) {
+  async function updateTask(task: ITarea, userID: string) {
     dispatch({ type: ActionsEnum.START_FETCH_ALL });
     try {
       console.log(task, "ver porque viene en objeto");
-      const { data } = await API.updateTask(task);
+      const { data } = await API.updateTask(task, userID);
       console.log(data.done, "ver q vuelve correctamente");
       dispatch({
         type: ActionsEnum.SUCCESS_UPDATE,
