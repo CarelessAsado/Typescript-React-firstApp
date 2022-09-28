@@ -2,8 +2,6 @@ import loginAxiosInstance from "./loginAxiosInstance";
 import { BACKEND_URL } from "config/constants";
 import axiosInstanceJWT from "./axiosInstanceJWT";
 
-/*-------------------------LOGOUT-----------------------------*/
-
 export const login = function (loginInput: ILoginInput) {
   return loginAxiosInstance.post<LoginSuccessful>(
     BACKEND_URL.LOGIN,

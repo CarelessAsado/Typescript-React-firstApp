@@ -46,9 +46,9 @@ export const Login = () => {
   function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(login(loginInput))
-      .unwrap() //hacer el navigate automatico con el expel user q tengo guardado
+      .unwrap()
       .then(() => navigate(FRONTEND_ENDPOINTS.HOME))
-      .catch(() => {}); //pevitar uncaught in promise en el browser log
+      .catch(() => {});
   }
   return (
     <Container>

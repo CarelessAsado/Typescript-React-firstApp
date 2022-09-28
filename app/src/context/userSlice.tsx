@@ -24,7 +24,6 @@ export const login = createAsyncThunk(
       return data;
     } catch (error: any) {
       await errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }
@@ -38,7 +37,6 @@ export const getTasks = createAsyncThunk(
       return data;
     } catch (error) {
       errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }
@@ -52,7 +50,6 @@ export const postNewTasks = createAsyncThunk(
       return data;
     } catch (error) {
       await errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }
@@ -66,7 +63,6 @@ export const deleteTasks = createAsyncThunk(
       return obj.id;
     } catch (error) {
       await errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }
@@ -80,26 +76,22 @@ export const updateTasks = createAsyncThunk(
       return data;
     } catch (error) {
       await errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }
 );
 
 export const refresh = createAsyncThunk(
-  "users/login", //uso mismo id login
+  "users/login",
   async function (_, { dispatch }) {
     try {
-      //dejar de recibir accessToken en HEADERS AXIOS
       const { data } = await authAPI.refresh();
       console.log(data, "REFRESH SUCCESFUL");
-      //Pensaba pasarlo a un useEffect pero al final lo dejo asi
-      /* SET HEADER USER AND LSTORAGE  */
+
       setHeaders_User_LStorage(data);
       return data;
     } catch (error) {
       await errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }
@@ -110,14 +102,7 @@ export const register = createAsyncThunk(
     try {
       await authAPI.register(input);
     } catch (error: any) {
-      //ANTIGUAMENTE mz parecía q si ponías 'return' en vez de 'throw' salía x EL builder.FULFILLED, pero ahora testeé y el catch lo agarra perfecto en el component
-      //FLOW DEL ERROR => arranca aca
-      //                => se va para el builder.add
-      //              => dsp p el builder.match
-      //              => x ultimo pasa x el .catch (ahi en ese ultimo paso, es donde tiene sentido poner acá el rejectWithValue, p/poder tener acceso al custom error COMPLETOOOO. En el builder podés tener acceso al error string, lo cual es una japa, xq dependiendo del tipo de error, yo accedo de manera diferente al string, x ej, si no hay internet, uso error.message, pero si uso error.message con axios, me salta el error x default q implica el statusCode)
-      /* IMPORTANT, rejectWithValue si queres catcharlo dentro del builder, SI O SI, tenés q mandar un string, si mandas el entire object te salta error, ver : https://stackoverflow.com/questions/73259876/a-non-serializable-value-was-detected-in-an-action  */
       await errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }
@@ -132,7 +117,6 @@ export const logout = createAsyncThunk(
       localStorage.removeItem(LSTORAGE_KEY);
     } catch (error) {
       errorHandler(error, dispatch);
-      //este error lo tiro xq si hago el unwrap en el front voy directo al .then()
       throw error;
     }
   }

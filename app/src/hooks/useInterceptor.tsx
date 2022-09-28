@@ -12,7 +12,6 @@ export const useInterceptor = () => {
         return response;
       },
       async (error) => {
-        /*  AbortController,antes hacia un simple return, y es como q no volvia al catch, iba al try y la cagaba */
         if (error?.message === "canceled") return Promise.reject(error);
 
         const previousRequest = error?.config;
@@ -20,7 +19,7 @@ export const useInterceptor = () => {
           (error?.response?.status === 401 ||
             error?.response?.status === 403) &&
           !previousRequest?.sent &&
-          error.config.url !== BACKEND_URL.REFRESH // necessary to avoid infinite loop in case of failed refresh. If there's an error during refresh, before going to the catch, axios interceptor will intervene and the .sent is undefined
+          error.config.url !== BACKEND_URL.REFRESH
         ) {
           console.log(
             previousRequest?.sent,
@@ -42,7 +41,6 @@ export const useInterceptor = () => {
             console.log("errorDuringRefresh, we will log you out");
           }
         }
-        /* si ponés return solo, sin Promise.reject(error), no pasa al catch, vuelve al try y vas a tener errores, x ej, destructurar data pensando q volvió la info biens */
         return Promise.reject(error);
       }
     )
