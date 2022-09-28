@@ -1,9 +1,12 @@
 import { model, Schema, Types, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { expirationTokens, jwtSecret } from "../constants";
+import { EXPIRATION_TOKENS, JWT_SECRET } from "../constants";
 
-export interface IUser extends Document {
+interface DocumentResult<T> {
+  _doc: T;
+}
+export interface IUser extends Document, DocumentResult<IUser> {
   username: string;
   password: string;
   email: string;
@@ -47,18 +50,18 @@ User.methods.verifyPass = async function (password: string) {
 };
 /*-------------------GENERATE JWT ACCESS/REFRESH TOKENS---------------------*/
 User.methods.generateAccessToken = function () {
-  return jwt.sign({ _id: this._id, email: this.email }, jwtSecret, {
-    expiresIn: expirationTokens.access,
+  return jwt.sign({ _id: this._id, email: this.email }, JWT_SECRET, {
+    expiresIn: EXPIRATION_TOKENS.access,
   });
 };
 User.methods.generateEmailToken = function () {
-  return jwt.sign({ _id: this._id, email: this.email }, jwtSecret, {
-    expiresIn: expirationTokens.emailToken,
+  return jwt.sign({ _id: this._id, email: this.email }, JWT_SECRET, {
+    expiresIn: EXPIRATION_TOKENS.emailToken,
   });
 };
 User.methods.generateRefreshToken = function () {
-  return jwt.sign({ _id: this._id }, jwtSecret, {
-    expiresIn: expirationTokens.refresh,
+  return jwt.sign({ _id: this._id }, JWT_SECRET, {
+    expiresIn: EXPIRATION_TOKENS.refresh,
   });
 };
 

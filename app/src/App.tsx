@@ -1,38 +1,39 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Login, Register, Main } from "pages/Index";
-import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
-import { ProtectedByAuth } from "components/ProtectedByAuth";
-import { PersistLogin } from "components/PersistLogin";
-import { Nav } from "components/Nav";
+import { ProtectedByAuth } from "components/middle/ProtectedByAuth";
+import { PersistLogin } from "components/middle/PersistLogin";
+import { Nav } from "components/Nav/Nav";
 import { UserProfile } from "pages/UserProfile";
-import { useInterceptor } from "Hooks/useInterceptor";
+import { useInterceptor } from "hooks/useInterceptor";
+import { FRONTEND_ENDPOINTS } from "config/constants";
+import { useResetErrors } from "hooks/useResetErrors";
+import { ExpelLoggedUser } from "components/middle/ExpelLoggedUser";
 
 function App() {
-  const { user } = useTareasGlobalContext();
   useInterceptor();
+  useResetErrors();
 
   return (
-    <div className="App">
+    <>
       <Nav></Nav>
       <Routes>
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/" /> : <Login />}
-        ></Route>
-
-        <Route
-          path="/register"
-          element={user ? <Navigate to="/" /> : <Register />}
-        ></Route>
-
         <Route element={<PersistLogin />}>
+          <Route element={<ExpelLoggedUser />}>
+            <Route path={FRONTEND_ENDPOINTS.LOGIN} element={<Login />} />
+
+            <Route path={FRONTEND_ENDPOINTS.REGISTER} element={<Register />} />
+          </Route>
+
           <Route element={<ProtectedByAuth />}>
-            <Route path="/" element={<Main />}></Route>
-            <Route path="/profile/user/:id" element={<UserProfile />}></Route>
+            <Route path={FRONTEND_ENDPOINTS.HOME} element={<Main />}></Route>
+            <Route
+              path={FRONTEND_ENDPOINTS.PROFILE}
+              element={<UserProfile />}
+            ></Route>
           </Route>
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 

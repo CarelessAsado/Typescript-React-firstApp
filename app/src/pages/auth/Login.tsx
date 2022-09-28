@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
-import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
   Form,
@@ -10,8 +9,11 @@ import {
   Bottom,
   Header,
 } from "components/styled-components/styled";
-import { useResetErrors } from "Hooks/useResetErrors";
-import { FRONTEND_URL } from "config/constants";
+
+import { FRONTEND_ENDPOINTS } from "config/constants";
+import { login } from "context/userSlice";
+import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
+
 const SuccessRegister = styled(Error)`
   color: green;
 `;
@@ -27,27 +29,32 @@ const RegisterLink = styled(Link)`
 `;
 
 export const Login = () => {
-  const errorAssert = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const { login, error, successRegister, isFetching } =
-    useTareasGlobalContext();
+  const { error, successRegister, loading } = useAppSelector(
+    (state) => state.user
+  );
   const [loginInput, setLoginInput] = useState<ILoginInput>({
     email: "",
     password: "",
   });
+  const dispatch = useAppDispatch();
   const changeLoginInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     setLoginInput({ ...loginInput, [name]: e.target.value });
   };
-  useResetErrors();
+
+  const navigate = useNavigate();
   function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    login(loginInput);
+    dispatch(login(loginInput))
+      .unwrap() //hacer el navigate automatico con el expel user q tengo guardado
+      .then(() => navigate(FRONTEND_ENDPOINTS.HOME))
+      .catch(() => {}); //pevitar uncaught in promise en el browser log
   }
   return (
     <Container>
       <Form onSubmit={handleLogin}>
         <Header>Login to your account.</Header>
-        <Error error={error} ref={errorAssert} aria-live="assertive">
+        <Error error={error} aria-live="assertive">
           {error}
         </Error>
         <SuccessRegister error={successRegister}>
@@ -70,13 +77,10 @@ export const Login = () => {
           placeholder="Password *"
           id="password"
         ></Input>
-        <Input
-          type="submit"
-          value={isFetching ? "Loading..." : "Submit"}
-        ></Input>
+        <Input type="submit" value={loading ? "Loading..." : "Submit"}></Input>
         <Bottom>
           No account yet?
-          <RegisterLink to={FRONTEND_URL.register}>
+          <RegisterLink to={FRONTEND_ENDPOINTS.REGISTER}>
             Register here.
           </RegisterLink>{" "}
         </Bottom>

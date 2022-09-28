@@ -1,8 +1,9 @@
 import User, { IUser } from "../models/User";
 import errorWrapper from "../ERRORS/asyncErrorWrapper";
 import { CustomError, Error401, Error403 } from "../ERRORS/customErrors";
-import { COOKIE_RT_KEY, COOKIE_OPTIONS, jwtSecret } from "../constants";
+import { COOKIE_RT_KEY, COOKIE_OPTIONS, JWT_SECRET } from "../constants";
 import jwt from "jsonwebtoken";
+import getCleanUser from "../utils/getCleanUser";
 
 export const registerUser = errorWrapper(async (req, res, next) => {
   const { username, password, email, confirmPassword } = req.body;
@@ -46,13 +47,7 @@ export const loginUser = errorWrapper(async (req, res, next) => {
     user.refreshToken = [...filteredRefreshTokens, newRefreshToken];
     await user.save();
 
-    const cleanUser = user.toObject({
-      transform: (doc) => {
-        const { _doc } = doc;
-        const { password, refreshToken, __v, ...rest } = _doc;
-        return rest;
-      },
-    });
+    const cleanUser = getCleanUser(user);
 
     return res.status(200).json({ user: cleanUser, accessToken });
   } else {
@@ -94,6 +89,7 @@ export const logout = errorWrapper(async (req, res, next) => {
 
 export const refreshMyToken = errorWrapper(async (req, res, next) => {
   console.log(req.cookies, "COOKIES");
+
   const cookies = req.cookies;
 
   if (!cookies?.[COOKIE_RT_KEY]) {
@@ -108,7 +104,7 @@ export const refreshMyToken = errorWrapper(async (req, res, next) => {
   const userFound = await User.findOne({ refreshToken: jwtRefreshToken });
   //HACKER ALERT decrypt token to search for user and delete all refreshtokens
   if (!userFound) {
-    jwt.verify(jwtRefreshToken, jwtSecret, async function (err, user) {
+    jwt.verify(jwtRefreshToken, JWT_SECRET, async function (err, user) {
       //expired RT, we just send the error
       if (err) {
         return next(new Error403("Hacker you've been caught."));
@@ -134,21 +130,29 @@ export const refreshMyToken = errorWrapper(async (req, res, next) => {
     userFound.refreshToken.length,
     "ver q no coincidan x un nro!!!"
   );
-  jwt.verify(jwtRefreshToken, jwtSecret, async function (err, user) {
+  jwt.verify(jwtRefreshToken, JWT_SECRET, async function (err, user) {
     //EXPIRED TOKEN
-    if (err) {
-      userFound.refreshToken = [...filteredRefreshTokens];
-      await userFound.save();
-      return next(new Error403("Expired refresh token."));
-    }
+    try {
+      if (err) {
+        userFound.refreshToken = [...filteredRefreshTokens];
+        await userFound.save();
+        return next(new Error403("Expired refresh token."));
+      }
 
-    const newAccessToken = userFound.generateAccessToken();
-    const newRefreshToken = userFound.generateRefreshToken();
-    res.cookie(COOKIE_RT_KEY, newRefreshToken, COOKIE_OPTIONS);
-    //guardamos el nuevo refresh tkn en la Db
-    userFound.refreshToken = [...filteredRefreshTokens, newRefreshToken];
-    await userFound.save();
-    //creo q el mando solo accessToken aca, fijarse si quiero mandar el user entero
-    return res.status(200).json({ accessToken: newAccessToken });
+      const newAccessToken = userFound.generateAccessToken();
+      const newRefreshToken = userFound.generateRefreshToken();
+      res.cookie(COOKIE_RT_KEY, newRefreshToken, COOKIE_OPTIONS);
+      //guardamos el nuevo refresh tkn en la Db
+      userFound.refreshToken = [...filteredRefreshTokens, newRefreshToken];
+
+      await userFound.save();
+
+      //front espera user y accessTkn
+      return res
+        .status(200)
+        .json({ accessToken: newAccessToken, user: getCleanUser(userFound) });
+    } catch (error) {
+      next(error);
+    }
   });
 });

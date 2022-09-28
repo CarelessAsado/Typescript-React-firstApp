@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -10,8 +9,10 @@ import {
   Bottom,
   Header,
 } from "components/styled-components/styled";
-import { useResetErrors } from "Hooks/useResetErrors";
-import { FRONTEND_URL } from "config/constants";
+
+import { FRONTEND_ENDPOINTS } from "config/constants";
+import { register } from "context/userSlice";
+import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
 
 const Label = styled.label``;
 
@@ -27,8 +28,9 @@ const RegisterLink = styled(Link)`
 
 export const Register = () => {
   const navigate = useNavigate();
-  const errorAssert = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const { register, error, isFetching } = useTareasGlobalContext();
+
+  const { error, loading } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const [registerInput, setregisterInput] = useState<IRegisterInput>({
     username: "",
     email: "",
@@ -39,19 +41,20 @@ export const Register = () => {
     const name = e.target.name;
     setregisterInput({ ...registerInput, [name]: e.target.value });
   };
-  useResetErrors();
+
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     /* IF REGISTRATION IS SUCCESSFUL IT RETURNS TRUE */
-    if (await register(registerInput)) {
-      navigate(FRONTEND_URL.login);
-    }
+    dispatch(register(registerInput))
+      .unwrap()
+      .then(() => navigate(FRONTEND_ENDPOINTS.LOGIN))
+      .catch(() => {}); //pevitar uncaught in promise en el browser log
   }
   return (
     <Container>
       <Form onSubmit={handleRegister}>
-        <Header>Login to your account.</Header>
-        <Error error={error} ref={errorAssert} aria-live="assertive">
+        <Header>Create new account.</Header>
+        <Error error={error} aria-live="assertive">
           {error}
         </Error>
         <Label htmlFor="username"></Label>
@@ -87,13 +90,12 @@ export const Register = () => {
           placeholder="Confirm password *"
           id="Confirmpassword"
         ></Input>
-        <Input
-          type="submit"
-          value={isFetching ? "Loading..." : "Submit"}
-        ></Input>
+        <Input type="submit" value={loading ? "Loading..." : "Submit"}></Input>
         <Bottom>
           Already have an account?
-          <RegisterLink to={FRONTEND_URL.login}>Log in here.</RegisterLink>{" "}
+          <RegisterLink to={FRONTEND_ENDPOINTS.LOGIN}>
+            Log in here.
+          </RegisterLink>{" "}
         </Bottom>
       </Form>
     </Container>
