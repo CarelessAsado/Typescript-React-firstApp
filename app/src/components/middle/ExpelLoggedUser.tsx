@@ -1,5 +1,5 @@
 import { FRONTEND_ENDPOINTS } from "config/constants";
-import { useAppSelector } from "hooks/reduxDispatchAndSelector";
+import { useAppSelector } from "t/reduxDispatchAndSelector";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 
 interface LocationState {

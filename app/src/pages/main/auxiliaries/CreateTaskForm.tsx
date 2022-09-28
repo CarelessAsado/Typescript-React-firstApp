@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import Spinner from "components/loaders/loader";
-import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
+import { useAppDispatch, useAppSelector } from "t/reduxDispatchAndSelector";
 import { getTasks, postNewTasks } from "context/userSlice";
 
 const Form = styled.form`

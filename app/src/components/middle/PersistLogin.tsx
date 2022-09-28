@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { LSTORAGE_KEY } from "config/constants";
-import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
+import { useAppDispatch, useAppSelector } from "t/reduxDispatchAndSelector";
 import { refresh } from "context/userSlice";
 
 export const PersistLogin = () => {

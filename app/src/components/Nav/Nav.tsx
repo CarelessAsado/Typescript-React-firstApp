@@ -8,7 +8,7 @@ import {
   BiUserPlus,
 } from "react-icons/bi";
 import { FRONTEND_ENDPOINTS } from "config/constants";
-import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
+import { useAppDispatch, useAppSelector } from "t/reduxDispatchAndSelector";
 import { logout } from "context/userSlice";
 const BlockBehindNavBar = styled.div`
   height: 60px;
