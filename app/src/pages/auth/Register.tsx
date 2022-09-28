@@ -12,7 +12,7 @@ import {
 
 import { FRONTEND_ENDPOINTS } from "config/constants";
 import { register } from "context/userSlice";
-import { useAppDispatch, useAppSelector } from "t/reduxDispatchAndSelector";
+import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
 
 const Label = styled.label``;
 

@@ -4,9 +4,9 @@ import { ProtectedByAuth } from "components/middle/ProtectedByAuth";
 import { PersistLogin } from "components/middle/PersistLogin";
 import { Nav } from "components/Nav/Nav";
 import { UserProfile } from "pages/UserProfile";
-import { useInterceptor } from "t/useInterceptor";
+import { useInterceptor } from "hooks/useInterceptor";
 import { FRONTEND_ENDPOINTS } from "config/constants";
-import { useResetErrors } from "t/useResetErrors";
+import { useResetErrors } from "hooks/useResetErrors";
 import { ExpelLoggedUser } from "components/middle/ExpelLoggedUser";
 
 function App() {

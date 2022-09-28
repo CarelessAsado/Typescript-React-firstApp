@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { useAppDispatch, useAppSelector } from "t/reduxDispatchAndSelector";
+import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
 import { deleteTasks, updateTasks } from "context/userSlice";
 
 interface StyledProps {

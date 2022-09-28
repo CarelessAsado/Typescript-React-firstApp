@@ -1,7 +1,7 @@
 import NewTaskForm from "pages/main/auxiliaries/CreateTaskForm";
 import TaskItem from "pages/main/auxiliaries/TaskItem";
 import styled from "styled-components";
-import { useAppSelector } from "t/reduxDispatchAndSelector";
+import { useAppSelector } from "hooks/reduxDispatchAndSelector";
 
 const Notasks = styled.div`
   color: #385f92;
