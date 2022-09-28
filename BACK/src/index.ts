@@ -6,11 +6,11 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import verifyToken from "./middleware/verifyToken";
 import finalErrorHandler from "./ERRORS/finalErrorHandler";
-import { FRONTEND_URL } from "./constants";
+import { BACKEND_ENDPOINTS, FRONTEND_URL } from "./constants";
 
 /*---------------------------------*/
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: FRONTEND_URL }));
 
@@ -26,13 +26,13 @@ connectDB(process.env.MONGODB_URI as string, connectServer);
 /*--------------ROUTES-----------------------*/
 /*----------UNPROTECTED ROUTES---------*/
 const authRoutes = require("./routes/auth");
-app.use("/api/v1/auth", authRoutes);
+app.use(BACKEND_ENDPOINTS.ROOT_AUTH, authRoutes);
 /*-----------PROTECTED ROUTES--------*/
 /*---MIDDLEWARE-*/
 app.use(verifyToken);
 const tasksRoutes = require("./routes/tasks");
-app.use("/api/v1/tasks", tasksRoutes);
+app.use(BACKEND_ENDPOINTS.ROOT_TASKS, tasksRoutes);
 const usersRoutes = require("./routes/users");
-app.use("/api/v1", usersRoutes);
+app.use(BACKEND_ENDPOINTS.ROOT, usersRoutes);
 
 app.use(finalErrorHandler);

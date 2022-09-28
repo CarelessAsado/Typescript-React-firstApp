@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import Spinner from "components/loaders/loader";
+import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
+import { getTasks, postNewTasks } from "context/userSlice";
 
 const Form = styled.form`
   margin: 0 auto;
@@ -54,20 +55,21 @@ const Error = styled.div`
 `;
 
 const NewTaskForm = () => {
-  const { isFetching, error, getTasks, postNewTask } = useTareasGlobalContext();
+  const { loading, error } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const [inputTask, setInputTask] = useState<string>("");
   const addTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     /*-----HACER UN CUSTOM ALERT if task is empty-----*/
-    postNewTask(inputTask);
-    setInputTask("");
+    dispatch(postNewTasks(inputTask))
+      .unwrap()
+      .then(() => setInputTask(""));
   };
 
   /*----------------GET ALL TASKS--------*/
   useEffect(() => {
-    getTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(getTasks());
+  }, [dispatch]);
   /*-------------------------------------*/
   return (
     <Form onSubmit={addTask}>
@@ -83,7 +85,7 @@ const NewTaskForm = () => {
         <SubmitBtn>Add task</SubmitBtn>
       </Decoration>
       <LoadingRelative>
-        {isFetching && (
+        {loading && (
           <Loading>
             <Spinner fz="3rem" h="100%" />
           </Loading>

@@ -16,6 +16,7 @@ export function setHeaders(accessToken: string = "") {
   axiosInstanceJWT.defaults.headers = {
     [headerKey]: accessToken,
   } as CommonHeaderProperties;
+  console.log(axiosInstanceJWT.defaults.headers, 666);
 }
 
 export default axiosInstanceJWT;

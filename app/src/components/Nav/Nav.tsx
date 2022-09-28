@@ -1,4 +1,3 @@
-import { useTareasGlobalContext } from "Hooks/useTareasGlobalContext";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -8,7 +7,9 @@ import {
   BiHomeHeart,
   BiUserPlus,
 } from "react-icons/bi";
-import { FRONTEND_URL } from "config/constants";
+import { FRONTEND_ENDPOINTS } from "config/constants";
+import { useAppDispatch, useAppSelector } from "hooks/reduxDispatchAndSelector";
+import { logout } from "context/userSlice";
 const BlockBehindNavBar = styled.div`
   height: 60px;
 `;
@@ -85,33 +86,33 @@ const Span = styled.span`
   }
 `;
 export const Nav = () => {
-  const { user, logout } = useTareasGlobalContext();
-
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   return (
     <>
       <BlockBehindNavBar />
       <NavBar>
-        <Link to={FRONTEND_URL.home}>
+        <Link to={FRONTEND_ENDPOINTS.HOME}>
           <Logo>ROD</Logo>
         </Link>
         <Links>
           {user ? (
             <>
               <LinkItem>
-                <NavLink to={FRONTEND_URL.home}>
+                <NavLink to={FRONTEND_ENDPOINTS.HOME}>
                   <BiHomeHeart />
                   <Span>Home</Span>
                 </NavLink>
               </LinkItem>
               <LinkItem>
-                <NavLink to={`/profile/user/${user._id}`}>
+                <NavLink to={FRONTEND_ENDPOINTS.PROFILEdyn(user._id)}>
                   <BiUser />
                   {user.username.split(" ")[0].length > 10
                     ? "user"
                     : user.username.split(" ")[0]}
                 </NavLink>
               </LinkItem>
-              <LinkItem onClick={logout}>
+              <LinkItem onClick={() => dispatch(logout())}>
                 <BiLogOut />
                 <Span>Logout</Span>
               </LinkItem>
@@ -119,13 +120,13 @@ export const Nav = () => {
           ) : (
             <>
               <LinkItem>
-                <NavLink to={FRONTEND_URL.register}>
+                <NavLink to={FRONTEND_ENDPOINTS.REGISTER}>
                   <BiUserPlus />
                   Register
                 </NavLink>
               </LinkItem>
               <LinkItem>
-                <NavLink to={FRONTEND_URL.login}>
+                <NavLink to={FRONTEND_ENDPOINTS.LOGIN}>
                   <BiLogIn></BiLogIn>
                   Login
                 </NavLink>

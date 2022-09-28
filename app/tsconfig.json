@@ -1,10 +1,5 @@
 {
   "compilerOptions": {
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      }
-    ],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -20,6 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    //allows absolute imports
     "baseUrl": "src"
   },
   "include": ["src"]
